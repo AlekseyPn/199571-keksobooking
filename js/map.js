@@ -2,8 +2,7 @@
 var AVATARS_SRC = {
   src: 'img/avatars/user0',
   format: '.png',
-  max: 8,
-  min: 1
+  numbersImages: [1, 2, 3, 4, 5, 6, 7, 8]
 };
 var TIMES = ['12:00', '13:00', '14:00'];
 var HOUSE_TYPES = ['flat', 'house', 'bungalo'];
@@ -38,13 +37,14 @@ var GUESTS_NUMBER = {
 };
 var ADS_INIT = {
   newLodge: '',
-  getRandomAds: function (titles, avatar, times, types, features, count, rooms, price, coors) {
+  getRandomAds: function (titles, avatars, times, types, features, count, rooms, price, coors) {
     var ads = [];
-    var titlesList = getRandomArr(titles);
+    var titlesList = randomizeOrder(titles);
+    var avatarsNumbersList = randomizeOrder(avatars.numbersImages);
     for (var i = 0; i < count; i++) {
       ads[i] = {
         'author': {
-          'avatar': avatar.src + countRandomInteger(avatar.min, avatar.max - 1) + avatar.format
+          'avatar': avatars.src + avatarsNumbersList[i] + avatars.format
         },
         'offer': {
           'title': titlesList[i],
@@ -120,14 +120,14 @@ var ADS_INIT = {
     lodgeElement.querySelector('.lodge__description').textContent = array.offer.description;
     return lodgeElement;
   },
-  replaceElem: function (parent, elemIncl, elemDel) {
+  replaceNode: function (parent, elemIncl, elemDel) {
     return parent.replaceChild(elemIncl, elemDel);
   },
   init: function (adsArray, fragment, map, dialog, removeElem) {
     this.insertLabelFragments(fragment, map, adsArray);
     this.newLodge = this.drawLodge(getRandomElement(adsArray));
     this.changeAvatar(getRandomElement(adsArray), dialog);
-    this.replaceElem(dialog, this.newLodge, removeElem);
+    this.replaceNode(dialog, this.newLodge, removeElem);
   }
 };
 var documentFragment = document.createDocumentFragment();
@@ -147,8 +147,9 @@ var getRandomElement = function (arr) {
 var compareRandom = function () {
   return Math.random() - 0.5;
 };
-var getRandomArr = function (array) {
-  return array.sort(compareRandom);
+var randomizeOrder = function (array) {
+  var arrayClone = array.slice(0, array.length);
+  return arrayClone.sort(compareRandom);
 };
 var getRandomArrayLength = function (arr) {
   var array = [];
