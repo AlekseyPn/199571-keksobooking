@@ -1,4 +1,5 @@
 'use strict';
+var SYMBOL_ROUBLE = '\u20bd';
 var AVATARS_SRC = {
   src: 'img/avatars/user0',
   format: '.png',
@@ -7,7 +8,7 @@ var AVATARS_SRC = {
 var TIMES = ['12:00', '13:00', '14:00'];
 var HOUSE_TYPES = ['flat', 'house', 'bungalo'];
 var FEATURES = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner'];
-var OFFER_TITLES = ['Большая уютная квартира', 'Маленькая неютная квартира', 'Огромный прекрасный дворец', 'Маленький ужасный дворец', 'Красивый гостевой домик', 'Некрасивый негостеприимный домик', 'Уютное бунгало далеко от моря', 'Неуютное бунгало по колено в воде'];
+var OFFER_TITLES = ['Большая уютная квартира', 'Маленькая неуютная квартира', 'Огромный прекрасный дворец', 'Маленький ужасный дворец', 'Красивый гостевой домик', 'Некрасивый негостеприимный домик', 'Уютное бунгало далеко от моря', 'Неуютное бунгало по колено в воде'];
 var MAX_ADS_COUNT = 8;
 var MAX_ROOMS = {
   max: 5,
@@ -37,7 +38,7 @@ var GUESTS_NUMBER = {
 };
 var ADS_INIT = {
   newLodge: '',
-  getRandomAds: function (titles, avatars, times, types, features, count, rooms, price, coors) {
+  generateAds: function (titles, avatars, times, types, features, count, rooms, price, coors) {
     var ads = [];
     var titlesList = randomizeOrder(titles);
     var avatarsNumbersList = randomizeOrder(avatars.numbersImages);
@@ -112,7 +113,7 @@ var ADS_INIT = {
     }
     lodgeElement.querySelector('.lodge__title').textContent = array.offer.title;
     lodgeElement.querySelector('.lodge__address').textContent = array.offer.address;
-    lodgeElement.querySelector('.lodge__price').innerHTML = array.offer.price + rouble + '/ночь';
+    lodgeElement.querySelector('.lodge__price').textContent = array.offer.price + SYMBOL_ROUBLE + '/ночь';
     lodgeElement.querySelector('.lodge__type').textContent = houseType;
     lodgeElement.querySelector('.lodge__rooms-and-guests').textContent = 'Для ' + array.offer.guests + ' гостей в ' + array.offer.rooms + ' комнатах';
     lodgeElement.querySelector('.lodge__checkin-time').textContent = 'Заезд после ' + array.offer.checkin + ', выезд до ' + array.offer.checkout;
@@ -120,13 +121,13 @@ var ADS_INIT = {
     lodgeElement.querySelector('.lodge__description').textContent = array.offer.description;
     return lodgeElement;
   },
-  replaceNode: function (parent, elemIncl, elemDel) {
-    return parent.replaceChild(elemIncl, elemDel);
+  replaceNode: function (parent, includingElem, replacedElem) {
+    return parent.replaceChild(includingElem, replacedElem);
   },
-  init: function (adsArray, fragment, map, dialog, removeElem) {
-    this.insertLabelFragments(fragment, map, adsArray);
-    this.newLodge = this.drawLodge(getRandomElement(adsArray));
-    this.changeAvatar(getRandomElement(adsArray), dialog);
+  init: function (adsData, fragment, map, dialog, removeElem) {
+    this.insertLabelFragments(fragment, map, adsData);
+    this.newLodge = this.drawLodge(getRandomElement(adsData));
+    this.changeAvatar(getRandomElement(adsData), dialog);
     this.replaceNode(dialog, this.newLodge, removeElem);
   }
 };
@@ -137,7 +138,6 @@ var map = document.querySelector('.tokyo__pin-map');
 var dialog = document.querySelector('#offer-dialog');
 var dialogPanel = dialog.querySelector('.dialog__panel');
 var featureItemTemp = document.querySelector('#feature-item-template').content;
-var rouble = '&#x20bd;';
 var countRandomInteger = function (min, max) {
   return Math.round(min + Math.random() * (max - min + 1));
 };
@@ -170,5 +170,5 @@ var getRandomArrayLength = function (arr) {
   }
   return array;
 };
-var offerDataArray = ADS_INIT.getRandomAds(OFFER_TITLES, AVATARS_SRC, TIMES, HOUSE_TYPES, FEATURES, MAX_ADS_COUNT, MAX_ROOMS, APARTMENT_PRICE, LOCATION_COORS);
-ADS_INIT.init(offerDataArray, documentFragment, map, dialog, dialogPanel);
+var adsData = ADS_INIT.generateAds(OFFER_TITLES, AVATARS_SRC, TIMES, HOUSE_TYPES, FEATURES, MAX_ADS_COUNT, MAX_ROOMS, APARTMENT_PRICE, LOCATION_COORS);
+ADS_INIT.init(adsData, documentFragment, map, dialog, dialogPanel);
