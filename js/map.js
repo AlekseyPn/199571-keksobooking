@@ -18,7 +18,7 @@ var APARTMENT_PRICE = {
   min: 1000,
   max: 1000000
 };
-var LOCATION_COORS = {
+var LOCATION_LIMITS = {
   'x': {
     'min': 300,
     'max': 900
@@ -38,7 +38,7 @@ var GUESTS_NUMBER = {
 };
 var ADS_INIT = {
   newLodge: '',
-  generateAds: function (titles, avatars, times, types, features, count, rooms, price, coors) {
+  generateAds: function (titles, avatars, times, types, features, count, rooms, price, coordinates) {
     var ads = [];
     var titlesList = randomizeOrder(titles);
     var avatarsNumbersList = randomizeOrder(avatars.numbersImages);
@@ -61,8 +61,8 @@ var ADS_INIT = {
           'photos': []
         },
         'location': {
-          'x': countRandomInteger(coors.x.min, coors.x.max),
-          'y': countRandomInteger(coors.y.min, coors.y.max)
+          'x': countRandomInteger(coordinates.x.min, coordinates.x.max),
+          'y': countRandomInteger(coordinates.y.min, coordinates.y.max)
         }
       };
       ads[i].offer.address += ads[i].location.x + ', ' + ads[i].location.y;
@@ -170,5 +170,5 @@ var getRandomArrayLength = function (arr) {
   }
   return array;
 };
-var adsData = ADS_INIT.generateAds(OFFER_TITLES, AVATARS_SRC, TIMES, HOUSE_TYPES, FEATURES, MAX_ADS_COUNT, MAX_ROOMS, APARTMENT_PRICE, LOCATION_COORS);
+var adsData = ADS_INIT.generateAds(OFFER_TITLES, AVATARS_SRC, TIMES, HOUSE_TYPES, FEATURES, MAX_ADS_COUNT, MAX_ROOMS, APARTMENT_PRICE, LOCATION_LIMITS);
 ADS_INIT.init(adsData, documentFragment, map, dialog, dialogPanel);
