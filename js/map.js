@@ -41,11 +41,11 @@ var ADS_INIT = {
   generateAds: function (titles, avatars, times, types, features, count, rooms, price, coordinates) {
     var ads = [];
     var titlesList = randomizeOrder(titles);
-    var avatarsNumbersList = randomizeOrder(avatars.numbersImages);
+    // var avatarsNumbersList = randomizeOrder(avatars.numbersImages);
     for (var i = 0; i < count; i++) {
       ads[i] = {
         'author': {
-          'avatar': avatars.src + avatarsNumbersList[i] + avatars.format
+          'avatar': avatars.src + avatars.numbersImages[i] + avatars.format
         },
         'offer': {
           'title': titlesList[i],
@@ -89,8 +89,8 @@ var ADS_INIT = {
     return featureItem;
   },
   insertFeatureFragments: function (fragment, array) {
-    for (var l = 0; l < array.length; l++) {
-      fragment.appendChild(this.drawFeature(array[l]));
+    for (var k = 0; k < array.length; k++) {
+      fragment.appendChild(this.drawFeature(array[k]));
     }
     return fragment;
   },
@@ -170,5 +170,22 @@ var getRandomArrayLength = function (arr) {
   }
   return array;
 };
+var removePinActiveClass = function () {
+  for (var m = 0; m < pinElements.length; m++) {
+    if (pinElements[m].classList.contains('pin--active')) {
+      pinElements[m].classList.remove('pin--active');
+    }
+  }
+};
 var adsData = ADS_INIT.generateAds(OFFER_TITLES, AVATARS_SRC, TIMES, HOUSE_TYPES, FEATURES, MAX_ADS_COUNT, MAX_ROOMS, APARTMENT_PRICE, LOCATION_LIMITS);
 ADS_INIT.init(adsData, documentFragment, map, dialog, dialogPanel);
+var pinElements = document.querySelectorAll('.pin');
+map.addEventListener('click', function (evt) {
+  var target = evt.target;
+  removePinActiveClass();
+  if (target.tagName === 'IMG') {
+    target.parentNode.classList.add('pin--active');
+  } else {
+    target.classList.add('pin--active');
+  }
+});
