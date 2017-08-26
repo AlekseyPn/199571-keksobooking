@@ -91,7 +91,7 @@ var ADS_INIT = {
     elem.querySelector('.dialog__title img').src = array.author.avatar;
   },
   drawLodge: function (array) {
-    var lodgeElement = lodgeTemplate.cloneNode(true);
+    var lodgeElement = dialogTemplate.cloneNode(true);
     var houseType;
     switch (array.offer.type) {
       case 'flat':
@@ -117,7 +117,6 @@ var ADS_INIT = {
   replaceNode: function (parent, includingElem, replacedElem) {
     return parent.replaceChild(includingElem, replacedElem);
   },
-
   init: function (adsData, fragment, map, dialog, removeElem) {
     this.randomAdsData = COMPUTING_FUNCTIONS.getRandomElement(adsData);
     PINS_FUNCTIONS.insertPinFragments(fragment, map, adsData);
@@ -197,7 +196,7 @@ var COMPUTING_FUNCTIONS = {
     return elem.id.split('-')[1];
   }
 };
-var handlers = {
+var dialogFunctions = {
   drawDialog: function (adsData, id, dialog, removeElem, mainDialog) {
     if (mainDialog) {
       this.newLodge = mainDialog;
@@ -220,12 +219,12 @@ var handlers = {
     }
     pinActiveElement = PINS_FUNCTIONS.addPinActiveClass(target);
     if (pinActiveElement.classList.contains('pin__main')) {
-      handlers.drawDialog(adsData, pinId, dialog, oldDialogPanel, dialogPanel);
+      dialogFunctions.drawDialog(adsData, pinId, dialog, oldDialogPanel, dialogPanel);
     } else {
       pinId = COMPUTING_FUNCTIONS.getElemIdNumber(pinActiveElement);
-      handlers.drawDialog(adsData, pinId, dialog, oldDialogPanel);
+      dialogFunctions.drawDialog(adsData, pinId, dialog, oldDialogPanel);
     }
-    document.addEventListener('keydown', handlers.elemEscPressHandler);
+    document.addEventListener('keydown', dialogFunctions.elemEscPressHandler);
   },
   dialogClose: function () {
     dialog.classList.add('hidden');
@@ -233,37 +232,37 @@ var handlers = {
       pinActiveElement.classList.remove('pin--active');
       pinActiveElement = null;
     }
-    document.removeEventListener('keydown', handlers.elemEscPressHandler);
+    document.removeEventListener('keydown', dialogFunctions.elemEscPressHandler);
   },
   elemEscPressHandler: function (evt) {
     if (evt.keyCode === keyCode.ESC) {
-      handlers.dialogClose();
+      dialogFunctions.dialogClose();
     }
   },
   elemEnterPressHandler: function (evt) {
     if (evt.keyCode === keyCode.ENTER) {
-      handlers.dialogOpen(evt);
+      dialogFunctions.dialogOpen(evt);
     } else if (evt.keyCode === keyCode.ENTER && this === dialogClose) {
-      handlers.dialogClose();
+      dialogFunctions.dialogClose();
     }
   }
 };
 var documentFragment = document.createDocumentFragment();
-var lodgeTemplate = document.querySelector('#lodge-template').content;
-var pin = document.querySelector('#pin-template').content;
 var map = document.querySelector('.tokyo__pin-map');
 var dialog = document.querySelector('#offer-dialog');
 var dialogPanel = dialog.querySelector('.dialog__panel');
 var dialogClose = dialog.querySelector('.dialog__close');
+var dialogTemplate = document.querySelector('#lodge-template').content;
 var featureItemTemp = document.querySelector('#feature-item-template').content;
+var pin = document.querySelector('#pin-template').content;
 var pinActiveElement = null;
 var adsData = ADS_INIT.generateAds(OFFER_TITLES, AVATARS_SRC, TIMES, HOUSE_TYPES, FEATURES, MAX_ADS_COUNT, MAX_ROOMS, APARTMENT_PRICE, LOCATION_LIMITS);
 ADS_INIT.init(adsData, documentFragment, map, dialog, dialogPanel);
 map.addEventListener('click', function (evt) {
-  handlers.dialogOpen(evt);
+  dialogFunctions.dialogOpen(evt);
 });
 dialogClose.addEventListener('click', function () {
-  handlers.dialogClose();
+  dialogFunctions.dialogClose();
 });
-dialogClose.addEventListener('keydown', handlers.pinEnterPressHandler);
-map.addEventListener('keydown', handlers.elemEnterPressHandler);
+dialogClose.addEventListener('keydown', dialogFunctions.pinEnterPressHandler);
+map.addEventListener('keydown', dialogFunctions.elemEnterPressHandler);
