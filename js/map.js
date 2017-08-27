@@ -238,10 +238,12 @@ var dialogFunctions = {
     }
   },
   elemEnterPressHandler: function (evt) {
-    if (evt.keyCode === keyCode.ENTER && this === dialogClose) {
-      dialogFunctions.dialogClose();
-    } else if (evt.keyCode === keyCode.ENTER) {
-      dialogFunctions.dialogOpen(evt);
+    if (evt.keyCode === keyCode.ENTER) {
+      if (this === dialogClose) {
+        dialogFunctions.dialogClose();
+      } else {
+        dialogFunctions.dialogOpen(evt);
+      }
     }
   }
 };
