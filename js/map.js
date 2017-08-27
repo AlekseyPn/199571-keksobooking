@@ -210,9 +210,7 @@ var dialogFunctions = {
   dialogOpen: function (evt) {
     var target = evt.target;
     var pinId = null;
-    if (dialog.classList.contains('hidden')) {
-      dialog.classList.remove('hidden');
-    }
+    dialog.classList.toggle('hidden', false);
     var oldDialogPanel = dialog.querySelector('.dialog__panel');
     if (pinActiveElement !== null) {
       PINS_FUNCTIONS.removePinActiveClass(pinActiveElement);
@@ -240,10 +238,10 @@ var dialogFunctions = {
     }
   },
   elemEnterPressHandler: function (evt) {
-    if (evt.keyCode === keyCode.ENTER) {
-      dialogFunctions.dialogOpen(evt);
-    } else if (evt.keyCode === keyCode.ENTER && this === dialogClose) {
+    if (evt.keyCode === keyCode.ENTER && this === dialogClose) {
       dialogFunctions.dialogClose();
+    } else if (evt.keyCode === keyCode.ENTER) {
+      dialogFunctions.dialogOpen(evt);
     }
   }
 };
@@ -264,5 +262,5 @@ map.addEventListener('click', function (evt) {
 dialogClose.addEventListener('click', function () {
   dialogFunctions.dialogClose();
 });
-dialogClose.addEventListener('keydown', dialogFunctions.pinEnterPressHandler);
+dialogClose.addEventListener('keydown', dialogFunctions.elemEnterPressHandler);
 map.addEventListener('keydown', dialogFunctions.elemEnterPressHandler);
