@@ -72,6 +72,7 @@ window.data = (function () {
     adsData: ADS_INIT.generateAds(OFFER_TITLES, AVATARS_SRC, TIMES, HOUSE_TYPES, FEATURES, MAX_ADS_COUNT, MAX_ROOMS, APARTMENT_PRICE, LOCATION_LIMITS),
     avatarData: AVATARS_SRC,
     documentFragment: document.createDocumentFragment(),
-    map: document.querySelector('.tokyo__pin-map')
+    map: document.querySelector('.tokyo__pin-map'),
+    cityMap: document.querySelector('.tokyo')
   };
 })();

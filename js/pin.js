@@ -5,7 +5,20 @@ window.pin = (function () {
     top: 40
   };
   var pin = {
+    userIconGutter: {
+      left: 75 / 2,
+      top: 94
+    },
+    MAX_PIN_COORDS: {
+      x: 1124,
+      y: 564
+    },
+    MIN_PIN_COORDS: {
+      x: 0,
+      y: 100
+    },
     pinTemplate: document.querySelector('#pin-template').content,
+    userPin: document.querySelector('.pin__main'),
     drawPin: function (array, index) {
       var pinElement = this.pinTemplate.cloneNode(true);
       var pinItem = pinElement.querySelector('.pin');

@@ -1,5 +1,5 @@
 'use strict';
-window.form = (function () {
+window.userForm = (function () {
   var GUESTS_CAPACITY = {
     one: '1',
     two: '2',
@@ -18,15 +18,15 @@ window.form = (function () {
     house: 5000,
     palace: 10000
   };
-  var form = document.querySelector('.notice');
-  var titleInput = form.querySelector('#title');
-  var addressInput = form.querySelector('#address');
-  var timein = form.querySelector('#timein');
-  var timeout = form.querySelector('#timeout');
-  var priceInput = form.querySelector('#price');
-  var roomNumber = form.querySelector('#room_number');
-  var capacity = form.querySelector('#capacity');
-  var houseTypeSelect = form.querySelector('#type');
+  var userform = document.querySelector('.notice');
+  var titleInput = userform.querySelector('#title');
+  var addressInput = userform.querySelector('#address');
+  var timein = userform.querySelector('#timein');
+  var timeout = userform.querySelector('#timeout');
+  var priceInput = userform.querySelector('#price');
+  var roomNumber = userform.querySelector('#room_number');
+  var capacity = userform.querySelector('#capacity');
+  var houseTypeSelect = userform.querySelector('#type');
   var errorColor = {
     border: '#e63512',
     shadow: '0 0 4px 1px #e63512'
@@ -34,6 +34,10 @@ window.form = (function () {
   var validColor = {
     border: '#34b132',
     shadow: '0 0 4px 1px #34b132'
+  };
+  var addressCoords = {
+    x: window.pin.userPin.offsetLeft,
+    y: window.pin.userPin.offsetTop
   };
   var userForm = {
     timeChangeHandler: function (evt) {
@@ -125,6 +129,32 @@ window.form = (function () {
       } else {
         userForm.colorizeInputValidation(this, true);
       }
+    },
+    setAddressValue: function (elem, coords, gutter) {
+      elem.value = 'x: ' + (coords.x + gutter.left) + ', y: ' + (coords.y + gutter.top);
+    },
+    splitAddressValue: function (value) {
+      var array = value.split(',');
+      for (var i = 0; i < array.length; i++) {
+        array[i] = array[i].split(/\w:/)[1];
+      }
+      return {
+        top: array[1],
+        left: array[0]
+      };
+    },
+    changePinCoords: function () {
+      var pinCoords = userForm.splitAddressValue(addressInput.value);
+      if (pinCoords.left > window.pin.MAX_PIN_COORDS.x || pinCoords.top > window.pin.MAX_PIN_COORDS.y) {
+        addressInput.value = 'Максимум для X 1124, для Y 564, введите еще раз';
+        userForm.colorizeInputValidation(addressInput);
+      } else if (pinCoords.left < window.pin.MIN_PIN_COORDS.x || pinCoords.top < window.pin.MIN_PIN_COORDS.y) {
+        addressInput.value = 'Минимум для X 0, для Y 100, введите еще раз';
+        userForm.colorizeInputValidation(addressInput);
+      } else {
+        userForm.colorizeInputValidation(addressInput, true);
+        window.drag.setPinPosition(pinCoords.top, pinCoords.left);
+      }
     }
   };
   timein.addEventListener('change', userForm.timeChangeHandler);
@@ -154,4 +184,18 @@ window.form = (function () {
       userForm.colorizeInputValidation(addressInput, true);
     }
   });
+  addressInput.addEventListener('blur', function (evt) {
+    if (addressInput.value === '') {
+      userForm.setAddressValue(addressInput, addressCoords, window.pin.userIconGutter);
+    } else {
+      userForm.colorizeInputValidation(addressInput, true);
+      userForm.changePinCoords();
+    }
+  });
+  userForm.setAddressValue(addressInput, addressCoords, window.pin.userIconGutter);
+  return {
+    setAddressValue: userForm.setAddressValue,
+    addressInput: addressInput,
+    addressCoords: addressCoords
+  };
 })();
