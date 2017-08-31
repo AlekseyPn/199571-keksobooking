@@ -184,7 +184,7 @@ window.userForm = (function () {
       userForm.colorizeInputValidation(addressInput, true);
     }
   });
-  addressInput.addEventListener('blur', function (evt) {
+  addressInput.addEventListener('blur', function () {
     if (addressInput.value === '') {
       userForm.setAddressValue(addressInput, addressCoords, window.pin.userIconGutter);
     } else {
