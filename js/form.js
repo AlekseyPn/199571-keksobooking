@@ -18,6 +18,12 @@ window.userForm = (function () {
     house: 5000,
     palace: 10000
   };
+  var ERROR_MSG = {
+    maxError: 'Максимум для X 1124, для Y 564, введите еще раз',
+    minError: 'Минимум для X 0, для Y 100, введите еще раз',
+    tooShort: 'Слишком короткий заголовок!',
+    tooLong: 'Слишком длинный заголовок!'
+  };
   var userform = document.querySelector('.notice');
   var titleInput = userform.querySelector('#title');
   var addressInput = userform.querySelector('#address');
@@ -146,10 +152,10 @@ window.userForm = (function () {
     changePinCoords: function () {
       var pinCoords = userForm.splitAddressValue(addressInput.value);
       if (pinCoords.left > window.pin.MAX_PIN_COORDS.x || pinCoords.top > window.pin.MAX_PIN_COORDS.y) {
-        addressInput.value = 'Максимум для X 1124, для Y 564, введите еще раз';
+        addressInput.value = ERROR_MSG.maxError;
         userForm.colorizeInputValidation(addressInput);
       } else if (pinCoords.left < window.pin.MIN_PIN_COORDS.x || pinCoords.top < window.pin.MIN_PIN_COORDS.y) {
-        addressInput.value = 'Минимум для X 0, для Y 100, введите еще раз';
+        addressInput.value = ERROR_MSG.minError;
         userForm.colorizeInputValidation(addressInput);
       } else {
         userForm.colorizeInputValidation(addressInput, true);
@@ -167,9 +173,9 @@ window.userForm = (function () {
     if (titleInput.validity.valueMissing || titleInput.validity.tooShort || titleInput.validity.tooLong) {
       userForm.colorizeInputValidation(titleInput);
       if (titleInput.validity.tooShort) {
-        titleInput.setCustomValidity('Слишком короткий заголовок!');
+        titleInput.setCustomValidity(ERROR_MSG.tooShort);
       } else if (titleInput.validity.tooLong) {
-        titleInput.setCustomValidity('Слишком длинный заголовок');
+        titleInput.setCustomValidity(ERROR_MSG.tooLong);
       }
     }
   });

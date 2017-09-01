@@ -7,11 +7,8 @@ window.form = (function () {
   window.computingFunctions.replaceNode(window.dialog.offerDialog, previewStartCard, window.dialog.dialogPanel);
   window.pin.userPin.addEventListener('mousedown', function (evt) {
     evt.preventDefault();
-    window.drag.startCoords = {
-      x: evt.clientX,
-      y: evt.clientY
-    };
-    window.data.cityMap.addEventListener('mousemove', window.drag.onMouseMove);
-    window.data.cityMap.addEventListener('mouseup', window.drag.onMouseUp);
+    window.drag.setStartCoords(evt.clientX, evt.clientY);
+    document.addEventListener('mousemove', window.drag.mouseMoveHandler);
+    document.addEventListener('mouseup', window.drag.mouseUpHandler);
   });
 })();
