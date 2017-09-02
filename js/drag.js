@@ -14,7 +14,7 @@ window.drag = (function () {
       drag.startCoords.y = y;
     },
     setPinChangedPosition: function (top, left) {
-      drag.pinChangedCoords.top  = top;
+      drag.pinChangedCoords.top = top;
       drag.pinChangedCoords.left = left;
     },
     mouseMoveHandler: function (moveEvt) {
