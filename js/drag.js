@@ -5,13 +5,17 @@ window.drag = (function () {
       x: 0,
       y: 0
     },
-    setPinPosition: function (top, left) {
-      window.pin.userPin.style.left = left + 'px';
-      window.pin.userPin.style.top = top + 'px';
+    pinChangedCoords: {
+      top: 0,
+      left: 0
     },
     setCoords: function (x, y) {
       drag.startCoords.x = x;
       drag.startCoords.y = y;
+    },
+    setPinChangedPosition: function (top, left) {
+      drag.pinChangedCoords.top  = top;
+      drag.pinChangedCoords.left = left;
     },
     mouseMoveHandler: function (moveEvt) {
       moveEvt.preventDefault();
@@ -23,25 +27,22 @@ window.drag = (function () {
         x: moveEvt.clientX,
         y: moveEvt.clientY
       };
-      var pinPosition = {
+      var pinShiftPosition = {
         left: window.pin.userPin.offsetLeft - shift.x,
         top: window.pin.userPin.offsetTop - shift.y
       };
-      if (window.userForm.addressCoords.x >= window.pin.MAX_PIN_COORDS.x && shift.x < 0) {
-        window.drag.setPinPosition(pinPosition.top, window.pin.MAX_PIN_COORDS.x);
-      } else if (window.userForm.addressCoords.y >= window.pin.MAX_PIN_COORDS.y && shift.y < 0) {
-        window.drag.setPinPosition(window.pin.MAX_PIN_COORDS.y, pinPosition.y);
-      } else if (window.userForm.addressCoords.x <= window.pin.MIN_PIN_COORDS.x && shift.x > 0) {
-        window.drag.setPinPosition(pinPosition.top, window.pin.MIN_PIN_COORDS.x);
-      } else if (window.userForm.addressCoords.y <= window.pin.MIN_PIN_COORDS.y && shift.y > 0) {
-        window.drag.setPinPosition(window.pin.MIN_PIN_COORDS.y, pinPosition.y);
+      drag.setPinChangedPosition(window.pin.userPin.offsetTop, window.pin.userPin.offsetLeft);
+      if (drag.pinChangedCoords.left >= window.pin.MAX_PIN_COORDS.x && shift.x < 0) {
+        window.pin.setPinPosition(pinShiftPosition.top, window.pin.MAX_PIN_COORDS.x);
+      } else if (drag.pinChangedCoords.top >= window.pin.MAX_PIN_COORDS.y && shift.y < 0) {
+        window.pin.setPinPosition(window.pin.MAX_PIN_COORDS.y, pinShiftPosition.y);
+      } else if (drag.pinChangedCoords.left <= window.pin.MIN_PIN_COORDS.x && shift.x > 0) {
+        window.pin.setPinPosition(pinShiftPosition.top, window.pin.MIN_PIN_COORDS.x);
+      } else if (drag.pinChangedCoords.top <= window.pin.MIN_PIN_COORDS.y && shift.y > 0) {
+        window.pin.setPinPosition(window.pin.MIN_PIN_COORDS.y, pinShiftPosition.y);
       } else {
-        window.drag.setPinPosition(pinPosition.top, pinPosition.left);
+        window.pin.setPinPosition(pinShiftPosition.top, pinShiftPosition.left);
       }
-      window.userForm.addressCoords = {
-        x: window.pin.userPin.offsetLeft,
-        y: window.pin.userPin.offsetTop
-      };
       window.userForm.setAddressValue(window.userForm.addressInput, window.userForm.addressCoords, window.pin.userIconGutter);
     },
     mouseUpHandler: function (upEvt) {

@@ -41,10 +41,7 @@ window.userForm = (function () {
     border: '#34b132',
     shadow: '0 0 4px 1px #34b132'
   };
-  var addressCoords = {
-    x: window.pin.userPin.offsetLeft,
-    y: window.pin.userPin.offsetTop
-  };
+  var addressCoords = window.pin.setAddressCoords();
   var userForm = {
     timeChangeHandler: function (evt) {
       var target = evt.target;

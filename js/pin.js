@@ -49,6 +49,16 @@ window.pin = (function () {
         elem.classList.add('pin--active');
       }
       return pinTarget;
+    },
+    setPinPosition: function (top, left) {
+      pin.userPin.style.left = left + 'px';
+      pin.userPin.style.top = top + 'px';
+    },
+    setAddressCoords: function () {
+      return {
+        x: pin.userPin.offsetLeft,
+        y: pin.userPin.offsetTop
+      };
     }
   };
   return pin;

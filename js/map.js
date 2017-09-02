@@ -7,7 +7,7 @@ window.form = (function () {
   window.computingFunctions.replaceNode(window.dialog.offerDialog, previewStartCard, window.dialog.dialogPanel);
   window.pin.userPin.addEventListener('mousedown', function (evt) {
     evt.preventDefault();
-    window.drag.setStartCoords(evt.clientX, evt.clientY);
+    window.drag.setCoords(evt.clientX, evt.clientY);
     document.addEventListener('mousemove', window.drag.mouseMoveHandler);
     document.addEventListener('mouseup', window.drag.mouseUpHandler);
   });
