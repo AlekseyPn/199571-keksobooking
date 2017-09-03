@@ -9,34 +9,6 @@ window.dialog = (function () {
     ENTER: 13
   };
   var dialog = {
-    newCard: '',
-    drawDialog: function (adsData, id, removeElem, mainDialog) {
-      if (mainDialog) {
-        this.newCard = mainDialog;
-        offerDialog.querySelector('.dialog__title img').src = window.data.avatarData.src + window.data.avatarData.numbersImages[0] + window.data.avatarData.format;
-      } else {
-        this.newCard = window.card.drawCard(adsData[id]);
-        window.card.changeAvatar(adsData[id]);
-      }
-      window.computingFunctions.replaceNode(offerDialog, this.newCard, removeElem);
-    },
-    dialogOpen: function (evt) {
-      var target = evt.target;
-      var pinId = null;
-      offerDialog.classList.toggle('hidden', false);
-      var oldDialogPanel = offerDialog.querySelector('.dialog__panel');
-      if (pinActiveElement !== null) {
-        window.pin.removePinActiveClass(pinActiveElement);
-      }
-      pinActiveElement = window.pin.addPinActiveClass(target);
-      if (pinActiveElement.classList.contains('pin__main')) {
-        dialog.drawDialog(window.data.adsData, pinId, oldDialogPanel, dialogPanel);
-      } else {
-        pinId = window.computingFunctions.getElemIdNumber(pinActiveElement);
-        dialog.drawDialog(window.data.adsData, pinId, oldDialogPanel);
-      }
-      document.addEventListener('keydown', dialog.elemEscPressHandler);
-    },
     dialogClose: function () {
       offerDialog.classList.add('hidden');
       if (pinActiveElement !== null) {
@@ -61,7 +33,7 @@ window.dialog = (function () {
     }
   };
   window.data.map.addEventListener('click', function (evt) {
-    dialog.dialogOpen(evt);
+    window.showCard.show(offerDialog, dialogPanel, window.data.adsData, evt);
   });
   dialogClose.addEventListener('click', function () {
     dialog.dialogClose();
@@ -70,7 +42,8 @@ window.dialog = (function () {
   window.data.map.addEventListener('keydown', dialog.elemEnterPressHandler);
   return {
     offerDialog: offerDialog,
-    dialogPanel: dialogPanel
+    dialogPanel: dialogPanel,
+    elemEscPressHandler: dialog.elemEscPressHandler
   };
 })();
 

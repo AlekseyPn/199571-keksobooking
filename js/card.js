@@ -16,9 +16,6 @@ window.card = (function () {
       }
       return fragment;
     },
-    changeAvatar: function (array) {
-      document.querySelector('.dialog__title img').src = array.author.avatar;
-    },
     drawCard: function (array) {
       var cardElement = cardTemplate.cloneNode(true);
       var houseType;
