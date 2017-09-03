@@ -33,23 +33,6 @@ window.pin = (function () {
       }
       elem.appendChild(window.data.documentFragment);
     },
-    removePinActiveClass: function (elem) {
-      if (elem.tagName.toLowerCase() === 'img') {
-        elem.parentNode.classList.remove('pin--active');
-      } else {
-        elem.classList.remove('pin--active');
-      }
-    },
-    addPinActiveClass: function (elem) {
-      var pinTarget = elem;
-      if (elem.tagName.toLowerCase() === 'img') {
-        pinTarget = elem.parentNode;
-        elem.parentNode.classList.add('pin--active');
-      } else {
-        elem.classList.add('pin--active');
-      }
-      return pinTarget;
-    },
     setPinPosition: function (top, left) {
       pin.userPin.style.left = left + 'px';
       pin.userPin.style.top = top + 'px';
