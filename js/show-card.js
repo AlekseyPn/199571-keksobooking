@@ -22,7 +22,7 @@ window.showCard = (function () {
     drawDialog: function (adsData, id, removeElem, offerDialog, mainDialog) {
       if (mainDialog) {
         this.newCard = mainDialog;
-        offerDialog.querySelector('.dialog__title img').src = window.data.avatarData.src + window.data.avatarData.numbersImages[0] + window.data.avatarData.format;
+        offerDialog.querySelector('.dialog__title img').src = window.data.AVATARS_DATA.mainPinSrc;
       } else {
         this.newCard = window.card.drawCard(adsData[id]);
         helpersFunction.changeAvatar(adsData[id]);

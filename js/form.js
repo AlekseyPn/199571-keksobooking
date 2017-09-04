@@ -6,9 +6,10 @@ window.userForm = (function () {
     tooShort: 'Слишком короткий заголовок!',
     tooLong: 'Слишком длинный заголовок!'
   };
-  var userform = document.querySelector('.notice');
-  var titleInput = userform.querySelector('#title');
-  var addressInput = userform.querySelector('#address');
+  var notice = document.querySelector('.notice');
+  var titleInput = notice.querySelector('#title');
+  var addressInput = notice.querySelector('#address');
+  var noticeForm = notice.querySelector('.notice__form');
   var errorColor = {
     border: '#e63512',
     shadow: '0 0 4px 1px #e63512'
@@ -59,6 +60,11 @@ window.userForm = (function () {
         userForm.colorizeInputValidation(addressInput, true);
         window.drag.setPinPosition(pinCoords.top, pinCoords.left);
       }
+    },
+    formData: new FormData(noticeForm),
+    sendHandler: function () {
+      window.modal.successMsgHandler();
+      noticeForm.reset();
     }
   };
   titleInput.addEventListener('invalid', function () {
@@ -91,6 +97,10 @@ window.userForm = (function () {
     }
   });
   userForm.setAddressValue(addressInput, addressCoords, window.pin.userIconGutter);
+  noticeForm.addEventListener('submit', function (evt) {
+    window.backend.save(window.modal.errorMsgHandler, new FormData(noticeForm), userForm.sendHandler);
+    evt.preventDefault();
+  });
   return {
     setAddressValue: userForm.setAddressValue,
     addressInput: addressInput,
