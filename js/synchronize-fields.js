@@ -50,6 +50,7 @@ window.synchronizeFields = (function () {
         break;
     }
     elem.min = houseTypeValue;
+    elem.value = elem.min;
   };
   var syncPriceWithType = function (elem, value) {
     var priceValue = +value;

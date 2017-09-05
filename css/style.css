@@ -665,3 +665,40 @@ select option:hover {
 .rounded {
     border-radius: 50%;
 }
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 10;
+}
+
+.modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  width: 500px;
+  height: 100px;
+  margin-top: -50px;
+  margin-left: -250px;
+  padding: 20px;
+  background-color: #fff;
+  z-index: 20;
+}
+
+.modal__close {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  width: 22px;
+  height: 22px;
+  background-color: transparent;
+  background-image: url('../img/close.svg');
+  background-size: 22px;
+  background-position: 0 0;
+  border: none;
+  cursor: pointer;
+}

@@ -4,18 +4,22 @@ window.pin = (function () {
     left: 20,
     top: 40
   };
+  var USER_ICON_SIZE = {
+    width: 75,
+    height: 94
+  };
   var pin = {
     userIconGutter: {
-      left: 75 / 2,
-      top: 94
+      left: USER_ICON_SIZE.width / 2,
+      top: USER_ICON_SIZE.height
     },
     MAX_PIN_COORDS: {
-      x: 1124,
-      y: 564
+      x: window.data.LOCATION_LIMITS.x.max - USER_ICON_SIZE.width / 2,
+      y: window.data.LOCATION_LIMITS.y.max - USER_ICON_SIZE.height
     },
     MIN_PIN_COORDS: {
-      x: 0,
-      y: 100
+      x: window.data.LOCATION_LIMITS.x.min,
+      y: window.data.LOCATION_LIMITS.y.min
     },
     pinTemplate: document.querySelector('#pin-template').content,
     userPin: document.querySelector('.pin__main'),
@@ -24,7 +28,7 @@ window.pin = (function () {
       var pinItem = pinElement.querySelector('.pin');
       pinItem.setAttribute('style', 'left:' + (array.location.x - ICON_GUTTER.left) + 'px; top:' + (array.location.y - ICON_GUTTER.top) + 'px;');
       pinElement.querySelector('img').src = array.author.avatar;
-      pinItem.id = window.data.avatarData.id + index;
+      pinItem.id = window.data.AVATARS_DATA.id + index;
       return pinElement;
     },
     insertPinFragments: function (elem, array) {

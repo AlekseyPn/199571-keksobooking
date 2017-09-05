@@ -32,6 +32,8 @@ window.drag = (function () {
         top: window.pin.userPin.offsetTop - shift.y
       };
       drag.setPinChangedPosition(window.pin.userPin.offsetTop, window.pin.userPin.offsetLeft);
+      window.userForm.addressCoords = window.pin.setAddressCoords();
+      window.userForm.setAddressValue(window.userForm.addressInput, window.userForm.addressCoords, window.pin.userIconGutter);
       if (drag.pinChangedCoords.left >= window.pin.MAX_PIN_COORDS.x && shift.x < 0) {
         window.pin.setPinPosition(pinShiftPosition.top, window.pin.MAX_PIN_COORDS.x);
       } else if (drag.pinChangedCoords.top >= window.pin.MAX_PIN_COORDS.y && shift.y < 0) {
@@ -43,7 +45,6 @@ window.drag = (function () {
       } else {
         window.pin.setPinPosition(pinShiftPosition.top, pinShiftPosition.left);
       }
-      window.userForm.setAddressValue(window.userForm.addressInput, window.userForm.addressCoords, window.pin.userIconGutter);
     },
     mouseUpHandler: function (upEvt) {
       upEvt.preventDefault();
