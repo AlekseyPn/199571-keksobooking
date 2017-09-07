@@ -9,6 +9,10 @@ window.dialog = (function () {
     ENTER: 13
   };
   var dialog = {
+    dialogData: [],
+    setDialogData: function (value) {
+      window.dialog.dialogData = value;
+    },
     dialogClose: function () {
       offerDialog.classList.add('hidden');
       if (pinActiveElement !== null) {
@@ -33,7 +37,7 @@ window.dialog = (function () {
     }
   };
   window.data.map.addEventListener('click', function (evt) {
-    window.showCard.show(offerDialog, dialogPanel, window.data.adsData, evt);
+    window.showCard.show(offerDialog, dialogPanel, window.dialog.dialogData, evt);
   });
   dialogClose.addEventListener('click', function () {
     dialog.dialogClose();
@@ -41,9 +45,10 @@ window.dialog = (function () {
   dialogClose.addEventListener('keydown', dialog.elemEnterPressHandler);
   window.data.map.addEventListener('keydown', dialog.elemEnterPressHandler);
   return {
+    setDialogData: dialog.setDialogData,
+    dialogData: dialog.dialogData,
     offerDialog: offerDialog,
     dialogPanel: dialogPanel,
     elemEscPressHandler: dialog.elemEscPressHandler
   };
 })();
-

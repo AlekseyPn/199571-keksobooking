@@ -12,7 +12,7 @@ window.modal = (function () {
       node.classList.add('hidden');
     },
     errorMsgHandler: function (error) {
-      modalNode.querySelector('.modal-text').textContent = error;
+      modalNode.querySelector('.modal__text').textContent = error;
       modal.showNode(overlay);
       modal.showNode(modalNode);
     },

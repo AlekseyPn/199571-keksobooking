@@ -14,7 +14,7 @@ window.pin = (function () {
       top: USER_ICON_SIZE.height
     },
     MAX_PIN_COORDS: {
-      x: window.data.LOCATION_LIMITS.x.max - USER_ICON_SIZE.width / 2,
+      x: window.data.LOCATION_LIMITS.x.max - USER_ICON_SIZE.width,
       y: window.data.LOCATION_LIMITS.y.max - USER_ICON_SIZE.height
     },
     MIN_PIN_COORDS: {
