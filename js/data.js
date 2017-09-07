@@ -18,8 +18,8 @@ window.data = (function () {
     },
     documentFragment: document.createDocumentFragment(),
     map: document.querySelector('.tokyo__pin-map'),
-    setAdsData: function (data) {
-      window.data.adsData = data;
+    setAdsData: function (adsData) {
+      window.data.adsData = adsData;
     }
   };
   return data;
