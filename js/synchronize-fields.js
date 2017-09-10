@@ -52,7 +52,7 @@ window.synchronizeFields = (function () {
     elem.min = houseTypeValue;
     elem.value = elem.min;
   };
-  var syncPriceWithType = function (elem, value) {
+  var syncValueWithType = function (elem, value) {
     var priceValue = +value;
     if (priceValue >= MIN_PRICE.palace) {
       elem.value = 'palace';
@@ -85,6 +85,6 @@ window.synchronizeFields = (function () {
     synchronizeFields(houseTypeSelect, priceInput, syncValueWithMin);
   });
   priceInput.addEventListener('input', function () {
-    synchronizeFields(priceInput, houseTypeSelect, syncPriceWithType);
+    synchronizeFields(priceInput, houseTypeSelect, syncValueWithType);
   });
 })();

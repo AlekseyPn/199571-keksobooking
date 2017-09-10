@@ -16,9 +16,10 @@ window.modal = (function () {
       modal.showNode(overlay);
       modal.showNode(modalNode);
     },
-    closeModal: function () {
+    closeHandler: function () {
       modal.hiddenNode(overlay);
       modal.hiddenNode(modalNode);
+      document.removeEventListener('click', modal.closeHandler);
     },
     successMsgHandler: function () {
       modalNode.querySelector('.modal__text').textContent = SUCCESS_MSG;
@@ -26,6 +27,6 @@ window.modal = (function () {
       modal.showNode(modalNode);
     }
   };
-  close.addEventListener('click', modal.closeModal);
+  close.addEventListener('click', modal.closeHandler);
   return modal;
 })();
