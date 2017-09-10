@@ -4,19 +4,19 @@ window.card = (function () {
   var cardFeatureTemplate = document.querySelector('#feature-item-template').content;
   var cardTemplate = document.querySelector('#lodge-template').content;
   var card = {
-    drawCardFeature: function (array) {
+    drawFeature: function (array) {
       var featureItem = cardFeatureTemplate.cloneNode(true);
       var featureClass = 'feature__image--' + array;
       featureItem.querySelector('.feature__image').classList.add(featureClass);
       return featureItem;
     },
-    insertCardsFragments: function (fragment, array) {
+    insertFragments: function (fragment, array) {
       for (var k = 0; k < array.length; k++) {
-        fragment.appendChild(this.drawCardFeature(array[k]));
+        fragment.appendChild(this.drawFeature(array[k]));
       }
       return fragment;
     },
-    drawCard: function (array) {
+    draw: function (array) {
       var cardElement = cardTemplate.cloneNode(true);
       var houseType;
       switch (array.offer.type) {
@@ -36,7 +36,7 @@ window.card = (function () {
       cardElement.querySelector('.lodge__type').textContent = houseType;
       cardElement.querySelector('.lodge__rooms-and-guests').textContent = 'Для ' + array.offer.guests + ' гостей в ' + array.offer.rooms + ' комнатах';
       cardElement.querySelector('.lodge__checkin-time').textContent = 'Заезд после ' + array.offer.checkin + ', выезд до ' + array.offer.checkout;
-      cardElement.querySelector('.lodge__features').appendChild(this.insertCardsFragments(window.data.documentFragment, array.offer.features));
+      cardElement.querySelector('.lodge__features').appendChild(this.insertFragments(window.data.documentFragment, array.offer.features));
       cardElement.querySelector('.lodge__description').textContent = array.offer.description;
       return cardElement;
     }

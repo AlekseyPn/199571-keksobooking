@@ -31,13 +31,13 @@ window.pin = (function () {
       pinItem.id = window.data.AVATARS_DATA.id + index;
       return pinElement;
     },
-    insertPinFragments: function (elem, array) {
+    insertFragments: function (elem, array) {
       for (var l = 0; l < array.length; l++) {
         window.data.documentFragment.appendChild(this.drawPin(array[l], l));
       }
       elem.appendChild(window.data.documentFragment);
     },
-    setPinPosition: function (top, left) {
+    setPosition: function (top, left) {
       pin.userPin.style.left = left + 'px';
       pin.userPin.style.top = top + 'px';
     },

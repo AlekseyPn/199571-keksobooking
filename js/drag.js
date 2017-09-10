@@ -13,7 +13,7 @@ window.drag = (function () {
       drag.startCoords.x = x;
       drag.startCoords.y = y;
     },
-    setPinChangedPosition: function (top, left) {
+    setChangedPosition: function (top, left) {
       drag.pinChangedCoords.top = top;
       drag.pinChangedCoords.left = left;
     },
@@ -31,19 +31,19 @@ window.drag = (function () {
         left: window.pin.userPin.offsetLeft - shift.x,
         top: window.pin.userPin.offsetTop - shift.y
       };
-      drag.setPinChangedPosition(window.pin.userPin.offsetTop, window.pin.userPin.offsetLeft);
+      drag.setChangedPosition(window.pin.userPin.offsetTop, window.pin.userPin.offsetLeft);
       window.userForm.addressCoords = window.pin.setAddressCoords();
       window.userForm.setAddressValue(window.userForm.addressInput, window.userForm.addressCoords, window.pin.userIconGutter);
       if (drag.pinChangedCoords.left >= window.pin.MAX_PIN_COORDS.x && shift.x < 0) {
-        window.pin.setPinPosition(pinShiftPosition.top, window.pin.MAX_PIN_COORDS.x);
+        window.pin.setPosition(pinShiftPosition.top, window.pin.MAX_PIN_COORDS.x);
       } else if (drag.pinChangedCoords.top >= window.pin.MAX_PIN_COORDS.y && shift.y < 0) {
-        window.pin.setPinPosition(window.pin.MAX_PIN_COORDS.y, pinShiftPosition.y);
+        window.pin.setPosition(window.pin.MAX_PIN_COORDS.y, pinShiftPosition.y);
       } else if (drag.pinChangedCoords.left <= window.pin.MIN_PIN_COORDS.x && shift.x > 0) {
-        window.pin.setPinPosition(pinShiftPosition.top, window.pin.MIN_PIN_COORDS.x);
+        window.pin.setPosition(pinShiftPosition.top, window.pin.MIN_PIN_COORDS.x);
       } else if (drag.pinChangedCoords.top <= window.pin.MIN_PIN_COORDS.y && shift.y > 0) {
-        window.pin.setPinPosition(window.pin.MIN_PIN_COORDS.y, pinShiftPosition.y);
+        window.pin.setPosition(window.pin.MIN_PIN_COORDS.y, pinShiftPosition.y);
       } else {
-        window.pin.setPinPosition(pinShiftPosition.top, pinShiftPosition.left);
+        window.pin.setPosition(pinShiftPosition.top, pinShiftPosition.left);
       }
     },
     mouseUpHandler: function (upEvt) {

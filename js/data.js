@@ -18,7 +18,7 @@ window.data = (function () {
     },
     documentFragment: document.createDocumentFragment(),
     map: document.querySelector('.tokyo__pin-map'),
-    setAdsData: function (adsData) {
+    setData: function (adsData) {
       window.data.adsData = adsData;
     }
   };

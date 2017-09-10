@@ -10,10 +10,13 @@ window.dialog = (function () {
   };
   var dialog = {
     dialogData: [],
-    setDialogData: function (value) {
+    setData: function (value) {
       window.dialog.dialogData = value;
     },
-    dialogClose: function () {
+    open: function (evt) {
+      window.showCard.init(offerDialog, dialogPanel, window.dialog.dialogData, evt);
+    },
+    close: function () {
       offerDialog.classList.add('hidden');
       if (pinActiveElement !== null) {
         pinActiveElement.classList.remove('pin--active');
@@ -23,29 +26,29 @@ window.dialog = (function () {
     },
     elemEscPressHandler: function (evt) {
       if (evt.keyCode === keyCode.ESC) {
-        dialog.dialogClose();
+        dialog.close();
       }
     },
     elemEnterPressHandler: function (evt) {
       if (evt.keyCode === keyCode.ENTER) {
         if (this === dialogClose) {
-          dialog.dialogClose();
+          dialog.close();
         } else {
-          dialog.dialogOpen(evt);
+          dialog.open(evt);
         }
       }
     }
   };
   window.data.map.addEventListener('click', function (evt) {
-    window.showCard.show(offerDialog, dialogPanel, window.dialog.dialogData, evt);
+    dialog.open(evt);
   });
   dialogClose.addEventListener('click', function () {
-    dialog.dialogClose();
+    dialog.close();
   });
   dialogClose.addEventListener('keydown', dialog.elemEnterPressHandler);
   window.data.map.addEventListener('keydown', dialog.elemEnterPressHandler);
   return {
-    setDialogData: dialog.setDialogData,
+    setData: dialog.setData,
     dialogData: dialog.dialogData,
     offerDialog: offerDialog,
     dialogPanel: dialogPanel,

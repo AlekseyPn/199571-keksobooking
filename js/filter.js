@@ -116,8 +116,8 @@ window.filter = (function () {
       filter.filterRooms();
       filter.filterGuests();
       filter.filterFeature();
-      window.pin.insertPinFragments(window.data.map, filter.filteredData);
-      window.dialog.setDialogData(filter.filteredData);
+      window.pin.insertFragments(window.data.map, filter.filteredData);
+      window.dialog.setData(filter.filteredData);
     },
   };
   housingType.addEventListener('change', function () {

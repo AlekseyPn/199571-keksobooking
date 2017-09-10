@@ -2,15 +2,13 @@
 window.map = (function () {
 
   var render = function (data) {
-    window.dialog.setDialogData(data);
-    var randomStartCard = window.computingFunctions.getRandomElement(data);
-    var previewStartCard = window.card.drawCard(randomStartCard);
-    window.pin.insertPinFragments(window.data.map, data);
-    window.showCard.changeAvatar(randomStartCard);
-    window.computingFunctions.replaceNode(window.dialog.offerDialog, previewStartCard, window.dialog.dialogPanel);
+    var randomData = window.computingFunctions.randomizeOrder(data);
+    randomData = randomData.slice(0, 3);
+    window.dialog.setData(randomData);
+    window.pin.insertFragments(window.data.map, randomData);
   };
   var loadDataHandler = function (data) {
-    window.data.setAdsData(data);
+    window.data.setData(data);
     render(window.data.adsData);
   };
   window.backend.load(window.modal.errorMsgHandler, loadDataHandler);
