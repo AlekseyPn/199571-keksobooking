@@ -1,58 +1,55 @@
 'use strict';
 window.showCard = (function () {
+  var ACTIVE_CLASS = 'pin--active';
   var pinActiveElement = null;
   var showCard = {
     newCard: '',
     removeActiveClass: function (elem) {
       if (elem.tagName.toLowerCase() === 'img') {
-        elem.parentNode.classList.remove('pin--active');
+        elem.parentNode.classList.remove(ACTIVE_CLASS);
       } else {
-        elem.classList.remove('pin--active');
+        elem.classList.remove(ACTIVE_CLASS);
       }
     },
     addActiveClass: function (elem) {
       var pinTarget = elem;
       if (elem.tagName.toLowerCase() === 'img') {
         pinTarget = elem.parentNode;
-        elem.parentNode.classList.add('pin--active');
+        elem.parentNode.classList.add(ACTIVE_CLASS);
       } else {
-        elem.classList.add('pin--active');
+        elem.classList.add(ACTIVE_CLASS);
       }
       return pinTarget;
     },
-    draw: function (adsData, id, removeElem, offerDialog, mainDialog) {
-      if (mainDialog) {
-        this.newCard = mainDialog;
-        offerDialog.querySelector('.dialog__title img').src = window.data.AVATARS_DATA.mainPinSrc;
-      } else {
-        this.newCard = window.card.draw(adsData[id]);
-        showCard.changeAvatar(adsData[id]);
-      }
+    showRandom: function (id, data) {
+      pinActiveElement = document.querySelector('#pin-' + id);
+      showCard.addActiveClass(pinActiveElement);
+      showCard.draw(data, id, window.dialog.dialogPanel, window.dialog.offerDialog);
+    },
+    draw: function (adsData, id, removeElem, offerDialog) {
+      this.newCard = window.card.draw(adsData[id]);
+      showCard.changeAvatar(adsData[id]);
       window.computingFunctions.replaceNode(offerDialog, this.newCard, removeElem);
     },
-    changeAvatar: function (array) {
-      document.querySelector('.dialog__title img').src = array.author.avatar;
+    changeAvatar: function (data) {
+      document.querySelector('.dialog__title img').src = data.author.avatar;
     },
-    init: function (offerDialog, dialogPanel, data, evt) {
+    init: function (offerDialog, data, evt) {
       var target = evt.target;
       var pinId = null;
       offerDialog.classList.toggle('hidden', false);
-      var oldDialogPanel = offerDialog.querySelector('.dialog__panel');
       if (pinActiveElement !== null) {
         showCard.removeActiveClass(pinActiveElement);
       }
       pinActiveElement = showCard.addActiveClass(target);
-      if (pinActiveElement.classList.contains('pin__main')) {
-        showCard.draw(data, pinId, oldDialogPanel, offerDialog, dialogPanel);
-      } else {
-        pinId = window.computingFunctions.getElemIdNumber(pinActiveElement);
-        showCard.draw(data, pinId, oldDialogPanel, offerDialog);
-      }
+      pinId = window.computingFunctions.getElemIdNumber(pinActiveElement);
+      showCard.draw(data, pinId, window.dialog.dialogPanel, offerDialog);
       document.addEventListener('keydown', window.dialog.elemEscPressHandler);
     }
   };
   return {
     init: showCard.init,
+    showRandom: showCard.showRandom,
     changeAvatar: showCard.changeAvatar
   };
 })();

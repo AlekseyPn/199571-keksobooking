@@ -9,12 +9,12 @@ window.dialog = (function () {
     ENTER: 13
   };
   var dialog = {
-    dialogData: [],
+    dialogsData: [],
     setData: function (value) {
-      window.dialog.dialogData = value;
+      window.dialog.dialogsData = value;
     },
     open: function (evt) {
-      window.showCard.init(offerDialog, dialogPanel, window.dialog.dialogData, evt);
+      window.showCard.init(offerDialog, window.dialog.dialogsData, evt);
     },
     close: function () {
       offerDialog.classList.add('hidden');
@@ -49,7 +49,7 @@ window.dialog = (function () {
   window.data.map.addEventListener('keydown', dialog.elemEnterPressHandler);
   return {
     setData: dialog.setData,
-    dialogData: dialog.dialogData,
+    dialogsData: dialog.dialogsData,
     offerDialog: offerDialog,
     dialogPanel: dialogPanel,
     elemEscPressHandler: dialog.elemEscPressHandler
