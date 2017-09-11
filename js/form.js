@@ -8,22 +8,22 @@ window.userForm = (function () {
   var titleInput = notice.querySelector('#title');
   var addressInput = notice.querySelector('#address');
   var noticeForm = notice.querySelector('.notice__form');
-  var errorColor = {
+  var ERROR_COLOR = {
     border: '#e63512',
     shadow: '0 0 4px 1px #e63512'
   };
-  var validColor = {
+  var VALID_COLOR = {
     border: '#34b132',
     shadow: '0 0 4px 1px #34b132'
   };
   var addressCoords = window.pin.setAddressCoords();
   var userForm = {
     colorizeInputValidation: function (elem, valid) {
-      elem.style.borderColor = errorColor.border;
-      elem.style.boxShadow = errorColor.shadow;
+      elem.style.borderColor = ERROR_COLOR.border;
+      elem.style.boxShadow = ERROR_COLOR.shadow;
       if (valid) {
-        elem.style.borderColor = validColor.border;
-        elem.style.boxShadow = validColor.shadow;
+        elem.style.borderColor = VALID_COLOR.border;
+        elem.style.boxShadow = VALID_COLOR.shadow;
       }
     },
     validationValueMissing: function () {

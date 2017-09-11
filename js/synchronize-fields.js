@@ -6,17 +6,23 @@ window.synchronizeFields = (function () {
     three: '3',
     notForGuest: '0'
   };
-  var ROOM_NUMBER = {
+  var ROOMS_NUMBER = {
     one: '1',
     two: '2',
     three: '3',
     oneHundred: '100'
   };
-  var MIN_PRICE = {
+  var MIN_PRICES = {
     bungalo: 0,
     flat: 1000,
     house: 5000,
     palace: 10000
+  };
+  var HOUSES_TYPES = {
+    bungalo: 'bungalo',
+    flat: 'flat',
+    house: 'house',
+    palace: 'palace'
   };
   var timein = document.querySelector('#timein');
   var timeout = document.querySelector('#timeout');
@@ -25,10 +31,10 @@ window.synchronizeFields = (function () {
   var houseTypeSelect = document.querySelector('#type');
   var priceInput = document.querySelector('#price');
   var syncValues = function (elem, value) {
-    if (value === ROOM_NUMBER.oneHundred) {
+    if (value === ROOMS_NUMBER.oneHundred) {
       elem.value = GUESTS_CAPACITY.notForGuest;
     } else if (value === GUESTS_CAPACITY.notForGuest) {
-      elem.value = ROOM_NUMBER.oneHundred;
+      elem.value = ROOMS_NUMBER.oneHundred;
     } else {
       elem.value = value;
     }
@@ -36,17 +42,17 @@ window.synchronizeFields = (function () {
   var syncValueWithMin = function (elem, value) {
     var houseTypeValue = value;
     switch (value) {
-      case 'bungalo':
-        houseTypeValue = MIN_PRICE.bungalo;
+      case HOUSES_TYPES.bungalo:
+        houseTypeValue = MIN_PRICES.bungalo;
         break;
-      case 'flat':
-        houseTypeValue = MIN_PRICE.flat;
+      case HOUSES_TYPES.flat:
+        houseTypeValue = MIN_PRICES.flat;
         break;
-      case 'house':
-        houseTypeValue = MIN_PRICE.house;
+      case HOUSES_TYPES.house:
+        houseTypeValue = MIN_PRICES.house;
         break;
-      case 'palace':
-        houseTypeValue = MIN_PRICE.palace;
+      case HOUSES_TYPES.palace:
+        houseTypeValue = MIN_PRICES.palace;
         break;
     }
     elem.min = houseTypeValue;
@@ -54,14 +60,14 @@ window.synchronizeFields = (function () {
   };
   var syncValueWithType = function (elem, value) {
     var priceValue = +value;
-    if (priceValue >= MIN_PRICE.palace) {
-      elem.value = 'palace';
-    } else if (priceValue >= MIN_PRICE.house) {
-      elem.value = 'house';
-    } else if (priceValue >= MIN_PRICE.flat) {
-      elem.value = 'flat';
-    } else if (priceValue >= MIN_PRICE.bungalo) {
-      elem.value = 'bungalo';
+    if (priceValue >= MIN_PRICES.palace) {
+      elem.value = HOUSES_TYPES.palace;
+    } else if (priceValue >= MIN_PRICES.house) {
+      elem.value = HOUSES_TYPES.house;
+    } else if (priceValue >= MIN_PRICES.flat) {
+      elem.value = HOUSES_TYPES.flat;
+    } else if (priceValue >= MIN_PRICES.bungalo) {
+      elem.value = HOUSES_TYPES.bungalo;
     }
   };
   var synchronizeFields = function (elem1, elem2, callback) {
@@ -87,4 +93,7 @@ window.synchronizeFields = (function () {
   priceInput.addEventListener('input', function () {
     synchronizeFields(priceInput, houseTypeSelect, syncValueWithType);
   });
+  return {
+    HOUSES_TYPES: HOUSES_TYPES
+  };
 })();

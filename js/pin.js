@@ -23,17 +23,17 @@ window.pin = (function () {
     },
     pinTemplate: document.querySelector('#pin-template').content,
     userPin: document.querySelector('.pin__main'),
-    drawPin: function (array, index) {
+    drawPin: function (data, index) {
       var pinElement = this.pinTemplate.cloneNode(true);
       var pinItem = pinElement.querySelector('.pin');
-      pinItem.setAttribute('style', 'left:' + (array.location.x - ICON_GUTTER.left) + 'px; top:' + (array.location.y - ICON_GUTTER.top) + 'px;');
-      pinElement.querySelector('img').src = array.author.avatar;
+      pinItem.setAttribute('style', 'left:' + (data.location.x - ICON_GUTTER.left) + 'px; top:' + (data.location.y - ICON_GUTTER.top) + 'px;');
+      pinElement.querySelector('img').src = data.author.avatar;
       pinItem.id = window.data.AVATARS_DATA.id + index;
       return pinElement;
     },
-    insertFragments: function (elem, array) {
-      for (var l = 0; l < array.length; l++) {
-        window.data.documentFragment.appendChild(this.drawPin(array[l], l));
+    insertFragments: function (elem, data) {
+      for (var l = 0; l < data.length; l++) {
+        window.data.documentFragment.appendChild(this.drawPin(data[l], l));
       }
       elem.appendChild(window.data.documentFragment);
     },

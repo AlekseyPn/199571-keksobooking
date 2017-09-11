@@ -7,9 +7,9 @@ window.computingFunctions = (function () {
     getRandomElement: function (arr) {
       return arr[Math.floor(Math.random() * arr.length)];
     },
-    randomizeOrder: function (array) {
-      var arrayClone = array.slice(0, array.length);
-      return arrayClone.sort(window.computingFunctions.compareRandom);
+    randomizeOrder: function (data) {
+      var dataClone = data.slice(0, data.length);
+      return dataClone.sort(window.computingFunctions.compareRandom);
     },
     compareRandom: function () {
       return Math.random() - 0.5;
