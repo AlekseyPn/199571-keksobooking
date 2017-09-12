@@ -2,11 +2,11 @@
 window.debounce = (function () {
   var DEBOUNCE_INTERVAL = 500;
   var lastTimeout;
-  var debounce = function (fun) {
+  var debounce = function (callback) {
     if (lastTimeout) {
       window.clearTimeout(lastTimeout);
     }
-    lastTimeout = window.setTimeout(fun, DEBOUNCE_INTERVAL);
+    lastTimeout = window.setTimeout(callback, DEBOUNCE_INTERVAL);
   };
   return debounce;
 })();
