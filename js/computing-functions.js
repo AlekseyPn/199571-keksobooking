@@ -4,8 +4,8 @@ window.computingFunctions = (function () {
     countRandomInteger: function (min, max) {
       return Math.round(min + Math.random() * (max - min + 1));
     },
-    getRandomElement: function (arr) {
-      return arr[Math.floor(Math.random() * arr.length)];
+    getRandomElement: function (data) {
+      return data[Math.floor(Math.random() * data.length)];
     },
     randomizeOrder: function (data) {
       var dataClone = data.slice(0, data.length);

@@ -5,11 +5,11 @@ window.modal = (function () {
   var overlay = document.querySelector('#overlay');
   var close = document.querySelector('#modal-close');
   var modal = {
-    showNode: function (node) {
-      node.classList.remove('hidden');
+    showNode: function (elem) {
+      elem.classList.remove('hidden');
     },
-    hiddenNode: function (node) {
-      node.classList.add('hidden');
+    hiddenNode: function (elem) {
+      elem.classList.add('hidden');
     },
     errorMsgHandler: function (error) {
       modalNode.querySelector('.modal__text').textContent = error;
