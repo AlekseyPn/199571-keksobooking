@@ -52,5 +52,11 @@ window.drag = (function () {
       document.removeEventListener('mouseup', window.drag.mouseUpHandler);
     }
   };
+  window.pin.userPin.addEventListener('mousedown', function (evt) {
+    evt.preventDefault();
+    drag.setCoords(evt.clientX, evt.clientY);
+    document.addEventListener('mousemove', drag.mouseMoveHandler);
+    document.addEventListener('mouseup', drag.mouseUpHandler);
+  });
   return drag;
 })();

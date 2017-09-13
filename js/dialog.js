@@ -2,7 +2,7 @@
 window.dialog = (function () {
   var pinActiveElement = null;
   var offerDialog = document.querySelector('#offer-dialog');
-  var dialogPanel = offerDialog.querySelector('.dialog__panel');
+  var dialogPanel = document.querySelector('.dialog__panel');
   var dialogClose = offerDialog.querySelector('.dialog__close');
   var keyCode = {
     ESC: 27,
@@ -49,9 +49,9 @@ window.dialog = (function () {
   window.data.map.addEventListener('keydown', dialog.elemEnterPressHandler);
   return {
     setData: dialog.setData,
+    dialogPanel: dialogPanel,
     dialogsData: dialog.dialogsData,
     offerDialog: offerDialog,
-    dialogPanel: dialogPanel,
     elemEscPressHandler: dialog.elemEscPressHandler
   };
 })();

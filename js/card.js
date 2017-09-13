@@ -2,9 +2,9 @@
 window.card = (function () {
   var SYMBOL_ROUBLE = '\u20bd';
   var HOUSES_TYPES_RU = {
-    flat: 'Квартира',
-    bungalo: 'Бунгало',
-    house: 'Дом'
+    'flat': 'Квартира',
+    'bungalo': 'Бунгало',
+    'house': 'Дом'
   };
   var cardFeatureTemplate = document.querySelector('#feature-item-template').content;
   var cardTemplate = document.querySelector('#lodge-template').content;
@@ -23,22 +23,10 @@ window.card = (function () {
     },
     draw: function (data) {
       var cardElement = cardTemplate.cloneNode(true);
-      var houseType = '';
-      switch (data.offer.type) {
-        case window.synchronizeFields.HOUSES_TYPES.flat:
-          houseType = HOUSES_TYPES_RU.flat;
-          break;
-        case window.synchronizeFields.HOUSES_TYPES.bungalo:
-          houseType = HOUSES_TYPES_RU.bungalo;
-          break;
-        case window.synchronizeFields.HOUSES_TYPES.house:
-          houseType = HOUSES_TYPES_RU.house;
-          break;
-      }
       cardElement.querySelector('.lodge__title').textContent = data.offer.title;
       cardElement.querySelector('.lodge__address').textContent = data.offer.address;
       cardElement.querySelector('.lodge__price').textContent = data.offer.price + SYMBOL_ROUBLE + '/ночь';
-      cardElement.querySelector('.lodge__type').textContent = houseType;
+      cardElement.querySelector('.lodge__type').textContent = HOUSES_TYPES_RU[data.offer.type];
       cardElement.querySelector('.lodge__rooms-and-guests').textContent = 'Для ' + data.offer.guests + ' гостей в ' + data.offer.rooms + ' комнатах';
       cardElement.querySelector('.lodge__checkin-time').textContent = 'Заезд после ' + data.offer.checkin + ', выезд до ' + data.offer.checkout;
       cardElement.querySelector('.lodge__features').appendChild(this.insertFragments(window.data.documentFragment, data.offer.features));

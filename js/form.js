@@ -34,11 +34,12 @@ window.userForm = (function () {
       }
     },
     setAddressValue: function (elem, coords, gutter) {
-      elem.value = 'x: ' + (coords.x + gutter.left) + ', y: ' + (coords.y + gutter.top);
+      var currentCoords = 'x: ' + (coords.x + gutter.left) + ', y: ' + (coords.y + gutter.top);
+      elem.setAttribute('value', currentCoords);
     },
     formData: new FormData(noticeForm),
     sendHandler: function () {
-      window.modal.successMsgHandler();
+      window.modalDialogs.successMsgHandler();
       noticeForm.reset();
     }
   };
@@ -57,10 +58,12 @@ window.userForm = (function () {
       userForm.colorizeInputValidation(titleInput, true);
     }
   });
-  addressInput.addEventListener('invalid', userForm.validationValueMissing);
   userForm.setAddressValue(addressInput, addressCoords, window.pin.userIconGutter);
   noticeForm.addEventListener('submit', function (evt) {
-    window.backend.save(window.modal.errorMsgHandler, new FormData(noticeForm), userForm.sendHandler);
+    window.backend.save(window.modalDialogs.errorMsgHandler, new FormData(noticeForm), userForm.sendHandler);
+    evt.preventDefault();
+  });
+  addressInput.addEventListener('keydown', function (evt) {
     evt.preventDefault();
   });
   return {

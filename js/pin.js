@@ -1,5 +1,15 @@
 'use strict';
 window.pin = (function () {
+  var LOCATION_LIMITS = {
+    'x': {
+      'min': 300,
+      'max': 1200
+    },
+    'y': {
+      'min': 100,
+      'max': 650
+    }
+  };
   var ICON_GUTTER = {
     left: 20,
     top: 40
@@ -14,12 +24,12 @@ window.pin = (function () {
       top: USER_ICON_SIZE.height
     },
     MAX_PIN_COORDS: {
-      x: window.data.LOCATION_LIMITS.x.max - USER_ICON_SIZE.width,
-      y: window.data.LOCATION_LIMITS.y.max - USER_ICON_SIZE.height
+      x: LOCATION_LIMITS.x.max - USER_ICON_SIZE.width,
+      y: LOCATION_LIMITS.y.max - USER_ICON_SIZE.height
     },
     MIN_PIN_COORDS: {
-      x: window.data.LOCATION_LIMITS.x.min,
-      y: window.data.LOCATION_LIMITS.y.min
+      x: LOCATION_LIMITS.x.min,
+      y: LOCATION_LIMITS.y.min
     },
     pinTemplate: document.querySelector('#pin-template').content,
     userPin: document.querySelector('.pin__main'),

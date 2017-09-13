@@ -1,8 +1,14 @@
 'use strict';
 window.map = (function () {
   var ELEMENT_NUMBER = 0;
+  var randomizeOrder = function (data) {
+    var dataClone = data.slice(0, data.length);
+    return dataClone.sort(function () {
+      return Math.random() - 0.5;
+    });
+  };
   var render = function (data) {
-    var randomData = window.computingFunctions.randomizeOrder(data);
+    var randomData = randomizeOrder(data);
     randomData = randomData.slice(0, 3);
     window.dialog.setData(randomData);
     window.pin.insertFragments(window.data.map, randomData);
@@ -12,11 +18,5 @@ window.map = (function () {
     window.data.setData(data);
     render(window.data.adsData);
   };
-  window.backend.load(window.modal.errorMsgHandler, loadDataHandler);
-  window.pin.userPin.addEventListener('mousedown', function (evt) {
-    evt.preventDefault();
-    window.drag.setCoords(evt.clientX, evt.clientY);
-    document.addEventListener('mousemove', window.drag.mouseMoveHandler);
-    document.addEventListener('mouseup', window.drag.mouseUpHandler);
-  });
+  window.backend.load(window.modalDialogs.errorMsgHandler, loadDataHandler);
 })();

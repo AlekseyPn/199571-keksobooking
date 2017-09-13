@@ -4,6 +4,12 @@ window.showCard = (function () {
   var pinActiveElement = null;
   var showCard = {
     newCard: '',
+    getElemIdNumber: function (elem) {
+      return elem.id.split('-')[1];
+    },
+    replaceNode: function (parent, includingElem, replacedElem) {
+      return parent.replaceChild(includingElem, replacedElem);
+    },
     removeActiveClass: function (elem) {
       if (elem.tagName.toLowerCase() === 'img') {
         elem.parentNode.classList.remove(ACTIVE_CLASS);
@@ -29,12 +35,14 @@ window.showCard = (function () {
     draw: function (adsData, id, removeElem, offerDialog) {
       this.newCard = window.card.draw(adsData[id]);
       showCard.changeAvatar(adsData[id]);
-      window.computingFunctions.replaceNode(offerDialog, this.newCard, removeElem);
+      showCard.replaceNode(offerDialog, this.newCard, removeElem);
+
     },
     changeAvatar: function (data) {
       document.querySelector('.dialog__title img').src = data.author.avatar;
     },
     init: function (offerDialog, data, evt) {
+      var currentDialog = document.querySelector('.dialog__panel');
       var target = evt.target;
       var pinId = null;
       offerDialog.classList.toggle('hidden', false);
@@ -42,9 +50,11 @@ window.showCard = (function () {
         showCard.removeActiveClass(pinActiveElement);
       }
       pinActiveElement = showCard.addActiveClass(target);
-      pinId = window.computingFunctions.getElemIdNumber(pinActiveElement);
-      showCard.draw(data, pinId, window.dialog.dialogPanel, offerDialog);
-      document.addEventListener('keydown', window.dialog.elemEscPressHandler);
+      pinId = showCard.getElemIdNumber(pinActiveElement);
+      if (pinId) {
+        showCard.draw(data, pinId, currentDialog, offerDialog);
+        document.addEventListener('keydown', window.dialog.elemEscPressHandler);
+      }
     }
   };
   return {
