@@ -27,6 +27,10 @@ window.pin = (function () {
       x: LOCATION_LIMITS.x.max - USER_ICON_SIZE.width,
       y: LOCATION_LIMITS.y.max - USER_ICON_SIZE.height
     },
+    AVATARS_DATA: {
+      mainPinSrc: 'img/avatars/user01.png',
+      id: 'pin-'
+    },
     MIN_PIN_COORDS: {
       x: LOCATION_LIMITS.x.min,
       y: LOCATION_LIMITS.y.min
@@ -46,7 +50,7 @@ window.pin = (function () {
       var pinItem = pinElement.querySelector('.pin');
       pinItem.setAttribute('style', 'left:' + (data.location.x - ICON_GUTTER.left) + 'px; top:' + (data.location.y - ICON_GUTTER.top) + 'px;');
       pinElement.querySelector('img').src = data.author.avatar;
-      pinItem.id = window.data.AVATARS_DATA.id + index;
+      pinItem.id = pin.AVATARS_DATA.id + index;
       return pinElement;
     },
     insertFragments: function (elem, data) {

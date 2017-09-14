@@ -57,14 +57,6 @@ window.filter = (function () {
       });
       return featureValues;
     },
-    setDataValue: function (data) {
-      return filter.filteredData.length !== 0 ? filter.filteredData : data;
-    },
-    // featureCondition: function (it) {
-    //   housingFeaturesValue.reduce(function (accumulator, prop) {
-    //     return accumulator && it.offer.features.indexOf(prop) === -1
-    //   })
-    // },
     filterType: function () {
       filter.filteredData = filter.filteredData.filter(function (it) {
         if (housingTypeValue === DEFAULT_VALUE) {
@@ -89,10 +81,8 @@ window.filter = (function () {
       });
     },
     filterFeature: function () {
-      console.log(filter.filteredData)
-      console.log(housingFeaturesValue)
-      filter.filteredData = window.data.adsData.filter(function (advertisment) {
-        housingFeaturesValue.reduce(function (accumulator, prop) {
+      filter.filteredData = filter.filteredData.filter(function (advertisment) {
+        return housingFeaturesValue.reduce(function (accumulator, prop) {
           return accumulator && advertisment.offer.features.indexOf(prop) !== -1;
         }, true);
       });

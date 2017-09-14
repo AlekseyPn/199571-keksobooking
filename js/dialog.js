@@ -29,15 +29,6 @@ window.dialog = (function () {
         dialog.close();
       }
     },
-    elemEnterPressHandler: function (evt) {
-      if (evt.keyCode === keyCode.ENTER) {
-        if (this === dialogClose) {
-          dialog.close();
-        } else {
-          dialog.open(evt);
-        }
-      }
-    }
   };
   window.data.map.addEventListener('click', function (evt) {
     dialog.open(evt);
@@ -45,8 +36,6 @@ window.dialog = (function () {
   dialogClose.addEventListener('click', function () {
     dialog.close();
   });
-  dialogClose.addEventListener('keydown', dialog.elemEnterPressHandler);
-  window.data.map.addEventListener('keydown', dialog.elemEnterPressHandler);
   return {
     setData: dialog.setData,
     dialogPanel: dialogPanel,
