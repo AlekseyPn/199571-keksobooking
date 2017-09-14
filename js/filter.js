@@ -21,6 +21,7 @@ window.filter = (function () {
   var housingRoomsNumber = document.querySelector('#housing_room-number');
   var housingGuestsNumber = document.querySelector('#housing_guests-number');
   var housingFeatures = document.querySelector('#housing_features');
+  var features = document.querySelectorAll('input[name=feature]');
 
   var housingTypeValue = DEFAULT_VALUE;
   var housingPriceValue = DEFAULT_VALUE;
@@ -49,24 +50,21 @@ window.filter = (function () {
     },
     setFeatureValue: function (elem) {
       var featureValues = [];
-      for (var i = 0; i < elem.elements.length; i++) {
-        if (elem.elements[i].checked && featureValues.indexOf(elem.elements[i].value) === -1) {
-          featureValues.push(elem.elements[i].value);
+      [].forEach.call(elem, function (it) {
+        if (it.checked && featureValues.indexOf(it.value) === -1) {
+          featureValues.push(it.value);
         }
-      }
+      });
       return featureValues;
     },
     setDataValue: function (data) {
       return filter.filteredData.length !== 0 ? filter.filteredData : data;
     },
-    featureCondition: function (it) {
-      for (var j = 0; j < housingFeaturesValue.length; j++) {
-        if (it.offer.features.indexOf(housingFeaturesValue[j]) === -1) {
-          return false;
-        }
-      }
-      return true;
-    },
+    // featureCondition: function (it) {
+    //   housingFeaturesValue.reduce(function (accumulator, prop) {
+    //     return accumulator && it.offer.features.indexOf(prop) === -1
+    //   })
+    // },
     filterType: function () {
       filter.filteredData = filter.filteredData.filter(function (it) {
         if (housingTypeValue === DEFAULT_VALUE) {
@@ -91,12 +89,12 @@ window.filter = (function () {
       });
     },
     filterFeature: function () {
-      filter.filteredData = filter.filteredData.filter(function (it) {
-        if (housingFeaturesValue.length === 0) {
-          return true;
-        } else {
-          return filter.featureCondition(it);
-        }
+      console.log(filter.filteredData)
+      console.log(housingFeaturesValue)
+      filter.filteredData = window.data.adsData.filter(function (advertisment) {
+        housingFeaturesValue.reduce(function (accumulator, prop) {
+          return accumulator && advertisment.offer.features.indexOf(prop) !== -1;
+        }, true);
       });
     },
     filterGuests: function () {
@@ -137,7 +135,7 @@ window.filter = (function () {
     window.debounce(filter.filterData(window.data.adsData));
   });
   housingFeatures.addEventListener('change', function () {
-    housingFeaturesValue = filter.setFeatureValue(housingFeatures);
+    housingFeaturesValue = filter.setFeatureValue(features);
     window.debounce(filter.filterData(window.data.adsData));
   });
 })();

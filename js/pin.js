@@ -31,6 +31,14 @@ window.pin = (function () {
       x: LOCATION_LIMITS.x.min,
       y: LOCATION_LIMITS.y.min
     },
+    LEFT_PIN_COORDS: {
+      max: LOCATION_LIMITS.x.max - USER_ICON_SIZE.width,
+      min: LOCATION_LIMITS.x.min
+    },
+    TOP_PIN_COORDS: {
+      max: LOCATION_LIMITS.y.max - USER_ICON_SIZE.height,
+      min: LOCATION_LIMITS.y.min
+    },
     pinTemplate: document.querySelector('#pin-template').content,
     userPin: document.querySelector('.pin__main'),
     drawPin: function (data, index) {
