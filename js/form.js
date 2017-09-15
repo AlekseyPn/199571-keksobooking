@@ -43,7 +43,7 @@ window.userForm = (function () {
       noticeForm.reset();
     }
   };
-  titleInput.addEventListener('invalid', function () {
+  titleInput.addEventListener('change', function () {
     if (titleInput.validity.valueMissing || titleInput.validity.tooShort || titleInput.validity.tooLong) {
       userForm.colorizeInputValidation(titleInput);
       if (titleInput.validity.tooShort) {
@@ -51,10 +51,8 @@ window.userForm = (function () {
       } else if (titleInput.validity.tooLong) {
         titleInput.setCustomValidity(ERROR_MSG.tooLong);
       }
-    }
-  });
-  titleInput.addEventListener('change', function () {
-    if (titleInput.validity.valid) {
+    } else {
+      titleInput.setCustomValidity('');
       userForm.colorizeInputValidation(titleInput, true);
     }
   });

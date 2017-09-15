@@ -97,6 +97,7 @@ window.filter = (function () {
       });
     },
     filterData: function (data) {
+      window.dialog.offerDialog.classList.add('hidden');
       filter.filteredData = data;
       filter.removePins();
       filter.filterType();

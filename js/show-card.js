@@ -45,19 +45,20 @@ window.showCard = (function () {
       var currentDialog = document.querySelector('.dialog__panel');
       var target = evt.target;
       var pinId = null;
-      offerDialog.classList.toggle('hidden', false);
       if (pinActiveElement !== null) {
         showCard.removeActiveClass(pinActiveElement);
       }
       pinActiveElement = showCard.addActiveClass(target);
       pinId = showCard.getElemIdNumber(pinActiveElement);
       if (pinId) {
+        offerDialog.classList.toggle('hidden', false);
         showCard.draw(data, pinId, currentDialog, offerDialog);
         document.addEventListener('keydown', window.dialog.elemEscPressHandler);
       }
     }
   };
   return {
+    pinActiveElement: pinActiveElement,
     init: showCard.init,
     showRandom: showCard.showRandom,
     changeAvatar: showCard.changeAvatar
