@@ -58,7 +58,7 @@ window.synchronizeFields = (function () {
     }
     insertOptions(availableOptions, elem);
   };
-  var syncValues = function (elem, value) {
+  var syncCapacity = function (elem, value) {
     setOptions(elem, value);
     switch (value) {
       case ROOMS_NUMBER.oneHundred:
@@ -67,6 +67,9 @@ window.synchronizeFields = (function () {
       default:
         elem.value = value;
     }
+  };
+  var syncValues = function (elem, value) {
+    elem.value = value;
   };
   var syncValueWithMin = function (elem, value) {
     var houseTypeValue = value;
@@ -88,9 +91,7 @@ window.synchronizeFields = (function () {
     elem.value = elem.min;
   };
   var synchronizeFields = function (elem1, elem2, callback) {
-    if (elem1.value !== elem2.value) {
-      callback(elem2, elem1.value);
-    }
+    callback(elem2, elem1.value);
   };
   timein.addEventListener('change', function () {
     synchronizeFields(timein, timeout, syncValues);
@@ -99,7 +100,7 @@ window.synchronizeFields = (function () {
     synchronizeFields(timeout, timein, syncValues);
   });
   roomNumber.addEventListener('change', function () {
-    synchronizeFields(roomNumber, capacity, syncValues);
+    synchronizeFields(roomNumber, capacity, syncCapacity);
   });
   houseTypeSelect.addEventListener('change', function () {
     synchronizeFields(houseTypeSelect, priceInput, syncValueWithMin);
