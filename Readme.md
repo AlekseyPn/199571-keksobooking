@@ -1,7 +1,7 @@
 # Личный проект «Кексобукинг» [![Build status][travis-image]][travis-url]
 
 * Студент: [Алексей Пересмехин](https://up.htmlacademy.ru/javascript/10/user/199571).
-* Наставник: 'Борис Ванюшин'(https://htmlacademy.ru/profile/id62080).
+* Наставник: [Борис Ванюшин](https://htmlacademy.ru/profile/id62080).
 
 ---
 
