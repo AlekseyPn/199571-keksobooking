@@ -1,7 +1,7 @@
 'use strict';
 window.map = (function () {
-  var ELEMENT_NUMBER = 0;
-  var render = function (data) {
+  const ELEMENT_NUMBER = 0;
+  const render = (data) => {
     var randomData = window.computingFunctions.randomizeOrder(data);
     randomData = randomData.slice(0, 3);
     window.dialog.setData(randomData);

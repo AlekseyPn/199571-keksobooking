@@ -29,7 +29,7 @@ window.showCard = (function () {
     draw: function (adsData, id, removeElem, offerDialog) {
       this.newCard = window.card.draw(adsData[id]);
       showCard.changeAvatar(adsData[id]);
-      window.computingFunctions.replaceNode(offerDialog, this.newCard, removeElem);
+      window.utility.replaceChildInternal(offerDialog, this.newCard, removeElem);
     },
     changeAvatar: function (data) {
       document.querySelector('.dialog__title img').src = data.author.avatar;
