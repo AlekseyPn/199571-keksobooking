@@ -24,6 +24,7 @@ window.card = (function () {
     draw: function (data) {
       var cardElement = cardTemplate.cloneNode(true);
       var houseType = '';
+      // всё гениальное просто :)
       switch (data.offer.type) {
         case window.synchronizeFields.HOUSES_TYPES.flat:
           houseType = HOUSES_TYPES_RU.flat;

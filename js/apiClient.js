@@ -1,5 +1,5 @@
 'use strict';
-window.ApiClient = (function () {
+const ApiClient = (function () {
   const URL = {
     server: ' https://js.dump.academy/keksobooking',
     data: 'https://js.dump.academy/keksobooking/data'
@@ -19,7 +19,7 @@ window.ApiClient = (function () {
     this.xhr = null;
   };
 
-  ApiClient.prototype.load = function (onError, onLoad) {
+  ApiClient.prototype.fetch = function (onError, onLoad) {
     _setupXhr(onError, onLoad);
     this.xhr.open(SEND_METHOD_TYPE.get, URL.data);
     this.xhr.send();

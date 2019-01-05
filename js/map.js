@@ -2,7 +2,7 @@
 window.map = (function () {
   const ELEMENT_NUMBER = 0;
   let render = (data) => {
-    var randomData = window.computingFunctions.randomizeOrder(data);
+    var randomData = utility.randomizeDataOrder(data);
     randomData = randomData.slice(0, 3);
     window.dialog.setData(randomData);
     window.pin.insertFragments(window.data.map, randomData);
@@ -12,7 +12,7 @@ window.map = (function () {
     window.data.setData(data);
     render(window.data.adsData);
   };
-  window.ApiClient.load(window.modal.errorMsgHandler, fetchHandler);
+  ApiClient.fetch(window.modal.errorMsgHandler, fetchHandler);
   window.pin.userPin.addEventListener('mousedown', (evt) => {
     evt.preventDefault();
     window.drag.setCoords(evt.clientX, evt.clientY);
