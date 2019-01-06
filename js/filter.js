@@ -116,7 +116,7 @@ window.filter = (function () {
       filter.filterRooms();
       filter.filterGuests();
       filter.filterFeature();
-      window.pin.insertFragments(window.data.map, filter.filteredData);
+      window.pin.createPinsEl(window.data.map, filter.filteredData);
       window.dialog.setData(filter.filteredData);
     },
   };

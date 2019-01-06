@@ -97,7 +97,4 @@ window.synchronizeFields = (function () {
   priceInput.addEventListener('input', function () {
     synchronizeFields(priceInput, houseTypeSelect, syncValueWithType);
   });
-  return {
-    HOUSES_TYPES: HOUSES_TYPES
-  };
 })();

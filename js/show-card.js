@@ -27,7 +27,7 @@ window.showCard = (function () {
       showCard.draw(data, id, window.dialog.dialogPanel, window.dialog.offerDialog);
     },
     draw: function (adsData, id, removeElem, offerDialog) {
-      this.newCard = window.card.draw(adsData[id]);
+      this.newCard = Card.draw(adsData[id]);
       showCard.changeAvatar(adsData[id]);
       offerDialog.replaceChild(this.newCard, removeElem);
     },

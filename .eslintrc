@@ -6,5 +6,6 @@ env:
 globals:
   utility: true
   ApiClient: true
+  Card: true
 
 extends: "eslint:recommended"

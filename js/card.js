@@ -1,51 +1,69 @@
 'use strict';
-window.card = (function () {
-  var SYMBOL_ROUBLE = '\u20bd';
-  var HOUSES_TYPES_RU = {
+window.Card = (function () {
+  const SYMBOL_ROUBLE = '\u20bd';
+  const LOCALIZED_HOUSE_TYPE= {
     flat: 'Квартира',
     bungalo: 'Бунгало',
     house: 'Дом'
   };
-  var cardFeatureTemplate = document.querySelector('#feature-item-template').content;
-  var cardTemplate = document.querySelector('#lodge-template').content;
-  var card = {
-    drawFeature: function (data) {
-      var featureItem = cardFeatureTemplate.cloneNode(true);
-      var featureClass = 'feature__image--' + data;
-      featureItem.querySelector('.feature__image').classList.add(featureClass);
-      return featureItem;
+  const documentFragment = document.createDocumentFragment();
+  const cardFeatureTemplate = document.querySelector('#feature-item-template').content;
+  const cardTemplate = document.querySelector('#lodge-template').content;
+  const fillFeatureFragment = (features) => {
+      features.forEach(item => {
+        documentFragment.appendChild(createFeatureEl(item));
+      });
+      return documentFragment;
+  };
+
+  const createFeatureEl = (feature) => {
+    const fragment = cardFeatureTemplate.cloneNode(true);
+    fragment.querySelector('.feature__image').classList.add('feature__image--' + feature);
+    return fragment;
+  };
+  const elementsForFill = [
+    {
+      selector: '.lodge__title',
+      getContent: (data) => data.offer.title,
     },
-    insertFragments: function (fragment, data) {
-      for (var k = 0; k < data.length; k++) {
-        fragment.appendChild(this.drawFeature(data[k]));
-      }
-      return fragment;
+    {
+      selector: '.lodge__address',
+      getContent: (data) => data.offer.address,
     },
-    draw: function (data) {
-      var cardElement = cardTemplate.cloneNode(true);
-      var houseType = '';
-      // всё гениальное просто :)
-      switch (data.offer.type) {
-        case window.synchronizeFields.HOUSES_TYPES.flat:
-          houseType = HOUSES_TYPES_RU.flat;
-          break;
-        case window.synchronizeFields.HOUSES_TYPES.bungalo:
-          houseType = HOUSES_TYPES_RU.bungalo;
-          break;
-        case window.synchronizeFields.HOUSES_TYPES.house:
-          houseType = HOUSES_TYPES_RU.house;
-          break;
-      }
-      cardElement.querySelector('.lodge__title').textContent = data.offer.title;
-      cardElement.querySelector('.lodge__address').textContent = data.offer.address;
-      cardElement.querySelector('.lodge__price').textContent = data.offer.price + SYMBOL_ROUBLE + '/ночь';
-      cardElement.querySelector('.lodge__type').textContent = houseType;
-      cardElement.querySelector('.lodge__rooms-and-guests').textContent = 'Для ' + data.offer.guests + ' гостей в ' + data.offer.rooms + ' комнатах';
-      cardElement.querySelector('.lodge__checkin-time').textContent = 'Заезд после ' + data.offer.checkin + ', выезд до ' + data.offer.checkout;
-      cardElement.querySelector('.lodge__features').appendChild(this.insertFragments(window.data.documentFragment, data.offer.features));
-      cardElement.querySelector('.lodge__description').textContent = data.offer.description;
-      return cardElement;
+    {
+      selector: '.lodge__price',
+      getContent: (data) => data.offer.price + SYMBOL_ROUBLE + '/ночь',
+    },
+    {
+      selector: '.lodge__type',
+      getContent: (data) => LOCALIZED_HOUSE_TYPE[data.offer.type],
+    },
+    {
+      selector: '.lodge__rooms-and-guests',
+      getContent: (data) => 'Для ' + data.offer.guests + ' гостей в ' + data.offer.rooms + ' комнатах',
+    },
+    {
+      selector: '.lodge__checkin-time',
+      getContent: (data) => 'Заезд после ' + data.offer.checkin + ', выезд до ' + data.offer.checkout,
+    },
+    {
+      selector: '.lodge__description',
+      getContent: (data) => data.offer.description,
+    },
+  ];
+  const Card = function () {
+    this.cardElement = null;
+    this.draw = function (data) {
+      this.cardElement = cardTemplate.cloneNode(true);
+      elementsForFill.forEach(el => {
+        this.fillElTextContent(el.selector, el.getContent(data));
+      });
+      this.cardElement.querySelector('.lodge__features').appendChild(fillFeatureFragment(data.offer.features));
+      return this.cardElement;
+    };
+    this.fillElTextContent = function(selector, content) {
+      this.cardElement.querySelector(selector).textContent = content;
     }
   };
-  return card;
+  return new Card();
 })();

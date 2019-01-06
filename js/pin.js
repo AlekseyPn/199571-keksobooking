@@ -31,7 +31,7 @@ window.pin = (function () {
       pinItem.id = window.data.AVATARS_DATA.id + index;
       return pinElement;
     },
-    insertFragments: function (elem, data) {
+    createPinsEl: function (elem, data) {
       for (let l = 0; l < data.length; l++) {
         window.data.documentFragment.appendChild(this.drawPin(data[l], l));
       }
