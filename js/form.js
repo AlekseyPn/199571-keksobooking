@@ -60,7 +60,7 @@ window.userForm = (function () {
   addressInput.addEventListener('invalid', userForm.validationValueMissing);
   userForm.setAddressValue(addressInput, addressCoords, window.pin.userIconGutter);
   noticeForm.addEventListener('submit', function (evt) {
-    window.ApiClient.save(window.modal.errorMsgHandler, new FormData(noticeForm), userForm.sendHandler);
+    window.ApiClient.update(window.modal.errorMsgHandler, new FormData(noticeForm), userForm.sendHandler);
     evt.preventDefault();
   });
   return {

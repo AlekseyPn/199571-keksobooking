@@ -1,9 +1,7 @@
 'use strict';
-const ApiClient = (function () {
-  const URL = {
-    server: ' https://js.dump.academy/keksobooking',
-    data: 'https://js.dump.academy/keksobooking/data'
-  };
+window.ApiClient = (function () {
+  const BASE_URL = ' https://js.dump.academy/keksobooking';
+  const URL = BASE_URL + '/data';
   const SUCCESS_STATUS_CODE = 200;
   const SEND_METHOD_TYPE = {
     post: 'POST',
@@ -16,41 +14,38 @@ const ApiClient = (function () {
   const TIMEOUT = 5000;
 
   const ApiClient = function () {
-    this.xhr = null;
+    let xhr = null;
+
+    const _setupXhr = function (onError, onLoad) {
+      xhr = new XMLHttpRequest();
+      xhr.responseType = 'json';
+      xhr.addEventListener('load', () => {
+        if (xhr.status === SUCCESS_STATUS_CODE) {
+          onLoad(xhr.response);
+        } else {
+          onError(xhr.response);
+        }
+      });
+      xhr.addEventListener('error', () => {
+        onError(ERROR_MSG.connection);
+      });
+      xhr.timeout = TIMEOUT;
+      xhr.addEventListener('timeout', () => {
+        onError(ERROR_MSG.timeout);
+      });
+    };
+
+    this.fetch = function (onError, onLoad) {
+      _setupXhr(onError, onLoad);
+      xhr.open(SEND_METHOD_TYPE.get, URL);
+      xhr.send();
+    };
+
+  this.update = function (onError, data, onLoad) {
+      _setupXhr(onError, onLoad);
+      xhr.open(SEND_METHOD_TYPE.post, BASE_URL);
+      xhr.send(data);
+    };
   };
-
-  ApiClient.prototype.fetch = function (onError, onLoad) {
-    _setupXhr(onError, onLoad);
-    this.xhr.open(SEND_METHOD_TYPE.get, URL.data);
-    this.xhr.send();
-  };
-
-  ApiClient.prototype.save = function (onError, data, onLoad) {
-    _setupXhr(onError, onLoad);
-    this.xhr.open(SEND_METHOD_TYPE.post, URL.server);
-    this.xhr.send(data);
-  };
-
-  let apiClient = new ApiClient();
-
-  let _setupXhr = (function (onError, onLoad) {
-    this.xhr = new XMLHttpRequest();
-    this.xhr.responseType = 'json';
-    this.xhr.addEventListener('load', () => {
-      if (this.xhr.status === SUCCESS_STATUS_CODE) {
-        onLoad(this.xhr.response);
-      } else {
-        onError(this.xhr.response);
-      }
-    });
-    this.xhr.addEventListener('error', () => {
-      onError(ERROR_MSG.connection);
-    });
-    this.xhr.timeout = TIMEOUT;
-    this.xhr.addEventListener('timeout', () => {
-      onError(ERROR_MSG.timeout);
-    });
-  }).bind(apiClient);
-
-  return apiClient
+  return new ApiClient();
 })();
