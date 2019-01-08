@@ -51,19 +51,19 @@ window.Card = (function () {
       getContent: (data) => data.offer.description,
     },
   ];
+  const fillElTextContent = function(selector, content, element) {
+    element.querySelector(selector).textContent = content;
+  };
   const Card = function () {
-    this.cardElement = null;
+    let cardElement = null;
     this.draw = function (data) {
-      this.cardElement = cardTemplate.cloneNode(true);
+      cardElement = cardTemplate.cloneNode(true);
       elementsForFill.forEach(el => {
-        this.fillElTextContent(el.selector, el.getContent(data));
+        fillElTextContent(el.selector, el.getContent(data), cardElement);
       });
-      this.cardElement.querySelector('.lodge__features').appendChild(fillFeatureFragment(data.offer.features));
-      return this.cardElement;
+      cardElement.querySelector('.lodge__features').appendChild(fillFeatureFragment(data.offer.features));
+      return cardElement;
     };
-    this.fillElTextContent = function(selector, content) {
-      this.cardElement.querySelector(selector).textContent = content;
-    }
   };
   return new Card();
 })();
