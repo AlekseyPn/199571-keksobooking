@@ -5,7 +5,7 @@ window.map = (function () {
     var randomData = utility.randomizeDataOrder(data);
     randomData = randomData.slice(0, 3);
     window.dialog.setData(randomData);
-    window.pin.createPinsEl(window.data.map, randomData);
+    window.data.mapEl.appendChild(window.pin.createPinsEl(randomData));
     window.showCard.showRandom(ELEMENT_NUMBER, randomData);
   };
   let fetchHandler = (data) => {

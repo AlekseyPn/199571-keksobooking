@@ -32,7 +32,7 @@ window.filter = (function () {
     removePins: function () {
       var pins = document.querySelectorAll('.pin');
       for (var i = 1; i < pins.length; i++) {
-        window.data.map.removeChild(pins[i]);
+        window.data.mapEl.removeChild(pins[i]);
       }
     },
     priceConditions: function (priceValue, it) {
@@ -116,7 +116,7 @@ window.filter = (function () {
       filter.filterRooms();
       filter.filterGuests();
       filter.filterFeature();
-      window.pin.createPinsEl(window.data.map, filter.filteredData);
+      window.data.mapEl.appendChild(window.pin.createPinsEl(filter.filteredData));
       window.dialog.setData(filter.filteredData);
     },
   };

@@ -39,14 +39,14 @@ window.dialog = (function () {
       }
     }
   };
-  window.data.map.addEventListener('click', function (evt) {
+  window.data.mapEl.addEventListener('click', function (evt) {
     dialog.open(evt);
   });
   dialogClose.addEventListener('click', function () {
     dialog.close();
   });
   dialogClose.addEventListener('keydown', dialog.elemEnterPressHandler);
-  window.data.map.addEventListener('keydown', dialog.elemEnterPressHandler);
+  window.data.mapEl.addEventListener('keydown', dialog.elemEnterPressHandler);
   return {
     setData: dialog.setData,
     dialogsData: dialog.dialogsData,

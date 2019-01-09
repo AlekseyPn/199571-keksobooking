@@ -1,41 +1,54 @@
 'use strict';
 window.pin = (function () {
-  var ICON_GUTTER = {
+  const ICON_GUTTER = {
     left: 20,
     top: 40
   };
-  var USER_ICON_SIZE = {
+  const USER_ICON_SIZE = {
     width: 75,
     height: 94
   };
-  var pin = {
+  const PIN_ID_PREFIX = "pin-";
+  const PIN_POSITION_LIMITS = {
+    x: {
+      min: 300,
+      max: 1200
+    },
+    y: {
+      min: 100,
+        max: 650
+    }
+  };
+  const pinTemplateContent = document.getElementById('pin-template').content;
+  const documentFragment = document.createDocumentFragment();
+  const pin = {
     userIconGutter: {
       left: USER_ICON_SIZE.width / 2,
       top: USER_ICON_SIZE.height
     },
+    // todo вообще не относиться к текущему файлу, эти лимиты используются для перетаскивания
     MAX_PIN_COORDS: {
-      x: window.data.LOCATION_LIMITS.x.max - USER_ICON_SIZE.width,
-      y: window.data.LOCATION_LIMITS.y.max - USER_ICON_SIZE.height
+      x: PIN_POSITION_LIMITS.x.max - USER_ICON_SIZE.width,
+      y: PIN_POSITION_LIMITS.y.max - USER_ICON_SIZE.height
     },
     MIN_PIN_COORDS: {
-      x: window.data.LOCATION_LIMITS.x.min,
-      y: window.data.LOCATION_LIMITS.y.min
+      x: PIN_POSITION_LIMITS.x.min,
+      y: PIN_POSITION_LIMITS.y.min
     },
-    pinTemplate: document.querySelector('#pin-template').content,
     userPin: document.querySelector('.pin__main'),
     drawPin: function (data, index) {
-      let pinElement = this.pinTemplate.cloneNode(true);
+      let pinElement = pinTemplateContent.cloneNode(true);
       let pinItem = pinElement.querySelector('.pin');
       pinItem.setAttribute('style', 'left:' + (data.location.x - ICON_GUTTER.left) + 'px; top:' + (data.location.y - ICON_GUTTER.top) + 'px;');
       pinElement.querySelector('img').src = data.author.avatar;
-      pinItem.id = window.data.AVATARS_DATA.id + index;
+      pinItem.id = PIN_ID_PREFIX + index;
       return pinElement;
     },
-    createPinsEl: function (elem, data) {
-      for (let l = 0; l < data.length; l++) {
-        window.data.documentFragment.appendChild(this.drawPin(data[l], l));
-      }
-      elem.appendChild(window.data.documentFragment);
+    createPinsEl: function (data) {
+      data.forEach((item, idx) => {
+        documentFragment.appendChild(this.drawPin(item, idx));
+      });
+      return documentFragment;
     },
     setPosition: function (top, left) {
       pin.userPin.style.left = left + 'px';

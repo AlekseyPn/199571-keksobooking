@@ -51,6 +51,8 @@ window.Card = (function () {
       getContent: (data) => data.offer.description,
     },
   ];
+
+  // todo метод плюрализации для гостей и комнат
   const fillElTextContent = function(selector, content, element) {
     element.querySelector(selector).textContent = content;
   };
