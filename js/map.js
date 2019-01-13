@@ -2,17 +2,17 @@
 window.map = (function () {
   const ELEMENT_NUMBER = 0;
   let render = (data) => {
-    var randomData = utility.randomizeDataOrder(data);
+    let randomData = utility.randomizeDataOrder(data);
     randomData = randomData.slice(0, 3);
     window.dialog.setData(randomData);
     window.data.mapEl.appendChild(window.pin.createPinsEl(randomData));
     window.showCard.showRandom(ELEMENT_NUMBER, randomData);
   };
-  let fetchHandler = (data) => {
+  let successCb = (data) => {
     window.data.setData(data);
     render(window.data.adsData);
   };
-  ApiClient.fetch(window.modal.errorMsgHandler, fetchHandler);
+  ApiClient.fetch(window.modal.errorMessageCb, successCb);
   window.pin.userPin.addEventListener('mousedown', (evt) => {
     evt.preventDefault();
     window.drag.setCoords(evt.clientX, evt.clientY);

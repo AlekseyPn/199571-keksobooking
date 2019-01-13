@@ -1,7 +1,7 @@
 'use strict';
 window.filter = (function () {
-  var DEFAULT_VALUE = 'any';
-  var PRICE_VALUE = {
+  const DEFAULT_VALUE = 'any';
+  const PRICE_VALUE = {
     middle: {
       name: 'middle',
       min: 10000,
@@ -16,24 +16,24 @@ window.filter = (function () {
       value: 50000
     }
   };
-  var housingType = document.querySelector('#housing_type');
-  var housingPrice = document.querySelector('#housing_price');
-  var housingRoomsNumber = document.querySelector('#housing_room-number');
-  var housingGuestsNumber = document.querySelector('#housing_guests-number');
-  var housingFeatures = document.querySelector('#housing_features');
+  const housingType = document.querySelector('#housing_type');
+  const housingPrice = document.querySelector('#housing_price');
+  const housingRoomsNumber = document.querySelector('#housing_room-number');
+  const housingGuestsNumber = document.querySelector('#housing_guests-number');
+  const housingFeatures = document.querySelector('#housing_features');
 
-  var housingTypeValue = DEFAULT_VALUE;
-  var housingPriceValue = DEFAULT_VALUE;
-  var housingRoomsNumberValue = DEFAULT_VALUE;
-  var housingGuestsNumberValue = DEFAULT_VALUE;
-  var housingFeaturesValue = [];
-  var filter = {
+  const housingTypeValue = DEFAULT_VALUE;
+  const housingPriceValue = DEFAULT_VALUE;
+  const housingRoomsNumberValue = DEFAULT_VALUE;
+  const housingGuestsNumberValue = DEFAULT_VALUE;
+  const housingFeaturesValue = [];
+  const filter = {
     filteredData: [],
     removePins: function () {
-      var pins = document.querySelectorAll('.pin');
-      for (var i = 1; i < pins.length; i++) {
-        window.data.mapEl.removeChild(pins[i]);
-      }
+      const pins = document.querySelectorAll('.pin');
+      [].call.forEach(pins, (pin) => {
+        window.data.mapEl.removeChild(pin);
+      });
     },
     priceConditions: function (priceValue, it) {
       switch (priceValue) {
@@ -55,9 +55,6 @@ window.filter = (function () {
         }
       }
       return featureValues;
-    },
-    setDataValue: function (data) {
-      return filter.filteredData.length !== 0 ? filter.filteredData : data;
     },
     featureCondition: function (it) {
       for (var j = 0; j < housingFeaturesValue.length; j++) {

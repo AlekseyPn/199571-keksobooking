@@ -24,31 +24,31 @@ window.Card = (function () {
   const elementsForFill = [
     {
       selector: '.lodge__title',
-      getContent: (data) => data.offer.title,
+      getContent: (ad) => ad.offer.title,
     },
     {
       selector: '.lodge__address',
-      getContent: (data) => data.offer.address,
+      getContent: (ad) => ad.offer.address,
     },
     {
       selector: '.lodge__price',
-      getContent: (data) => data.offer.price + SYMBOL_ROUBLE + '/ночь',
+      getContent: (ad) => ad.offer.price + SYMBOL_ROUBLE + '/ночь',
     },
     {
       selector: '.lodge__type',
-      getContent: (data) => LOCALIZED_HOUSE_TYPE[data.offer.type],
+      getContent: (ad) => LOCALIZED_HOUSE_TYPE[ad.offer.type],
     },
     {
       selector: '.lodge__rooms-and-guests',
-      getContent: (data) => 'Для ' + data.offer.guests + ' гостей в ' + data.offer.rooms + ' комнатах',
+      getContent: (ad) => 'Для ' + ad.offer.guests + ' гостей в ' + ad.offer.rooms + ' комнатах',
     },
     {
       selector: '.lodge__checkin-time',
-      getContent: (data) => 'Заезд после ' + data.offer.checkin + ', выезд до ' + data.offer.checkout,
+      getContent: (ad) => 'Заезд после ' + ad.offer.checkin + ', выезд до ' + ad.offer.checkout,
     },
     {
       selector: '.lodge__description',
-      getContent: (data) => data.offer.description,
+      getContent: (ad) => ad.offer.description,
     },
   ];
 
@@ -58,12 +58,12 @@ window.Card = (function () {
   };
   const Card = function () {
     let cardElement = null;
-    this.draw = function (data) {
+    this.draw = function (ad) {
       cardElement = cardTemplate.cloneNode(true);
       elementsForFill.forEach(el => {
-        fillElTextContent(el.selector, el.getContent(data), cardElement);
+        fillElTextContent(el.selector, el.getContent(ad), cardElement);
       });
-      cardElement.querySelector('.lodge__features').appendChild(fillFeatureFragment(data.offer.features));
+      cardElement.querySelector('.lodge__features').appendChild(fillFeatureFragment(ad.offer.features));
       return cardElement;
     };
   };

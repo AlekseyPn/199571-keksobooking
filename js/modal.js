@@ -11,7 +11,7 @@ window.modal = (function () {
     hiddenNode: function (elem) {
       elem.classList.add('hidden');
     },
-    errorMsgHandler: function (error) {
+    errorMessageCb: function (error) {
       modalNode.querySelector('.modal__text').textContent = error;
       modal.showNode(overlay);
       modal.showNode(modalNode);
