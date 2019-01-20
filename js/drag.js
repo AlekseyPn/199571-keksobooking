@@ -1,5 +1,6 @@
 'use strict';
 window.drag = (function () {
+  // модуль отвечает за drag'n'drop а связан с пином
   var drag = {
     startCoords: {
       x: 0,

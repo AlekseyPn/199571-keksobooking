@@ -22,11 +22,11 @@ window.filter = (function () {
   const housingGuestsNumber = document.querySelector('#housing_guests-number');
   const housingFeatures = document.querySelector('#housing_features');
 
-  const housingTypeValue = DEFAULT_VALUE;
-  const housingPriceValue = DEFAULT_VALUE;
-  const housingRoomsNumberValue = DEFAULT_VALUE;
-  const housingGuestsNumberValue = DEFAULT_VALUE;
-  const housingFeaturesValue = [];
+  let housingTypeValue = DEFAULT_VALUE;
+  let housingPriceValue = DEFAULT_VALUE;
+  let housingRoomsNumberValue = DEFAULT_VALUE;
+  let housingGuestsNumberValue = DEFAULT_VALUE;
+  let housingFeaturesValue = [];
   const filter = {
     filteredData: [],
     removePins: function () {

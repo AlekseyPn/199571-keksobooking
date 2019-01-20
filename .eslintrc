@@ -6,6 +6,9 @@ env:
 globals:
   utility: true
   ApiClient: true
-  Card: true
+  Card: true,
+  map: true,
+  Pin: true,
+  UserPin: true
 
 extends: "eslint:recommended"
