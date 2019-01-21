@@ -9,6 +9,7 @@ globals:
   Card: true,
   map: true,
   Pin: true,
-  UserPin: true
+  UserPin: true,
+  PinsCreator: true
 
 extends: "eslint:recommended"

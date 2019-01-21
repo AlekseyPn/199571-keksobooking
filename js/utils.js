@@ -1,6 +1,6 @@
 'use strict';
 const utility = (function () {
-    return {
+  return {
     // getRandomInteger: function (min, max) {
     //   return Math.round(min + Math.random() * (max - min + 1));
     // },

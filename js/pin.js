@@ -1,15 +1,5 @@
 'use strict';
 (function () {
-  const PIN_POSITION_LIMITS = {
-    x: {
-      min: 300,
-      max: 1200
-    },
-    y: {
-      min: 100,
-      max: 650
-    }
-  };
   const Pin = function (pinData, idx) {
     this.data = pinData;
     this.idx = idx;
@@ -51,30 +41,29 @@
       },
       top: {
         max: mapRect.height - rect.height,
-        min: Limit.top,
+        min: Limit.Top,
       }
     }
-  }
-  UserPin.prototype = {
-    setPosition(top, left) {
+    this.setPosition = function (top, left) {
       this.el.style.top = this.getPositionValue(top, 'top') + 'px';
       this.el.style.left = this.getPositionValue(left, 'left') + 'px';
-    },
-    getPositionValue(value, propKey) {
+    }
+    this.getPositionValue = function (value, propKey) {
       return Math.min(Math.max(this.COORD_LIMIT[propKey].min, value), this.COORD_LIMIT[propKey].max)
     }
   }
-  const pin = {
-    createPinsEl: function (data) {
+
+  const PinsCreator = function () {
+    this.el = document.createDocumentFragment()
+    this.getPins = function (data) {
       data.forEach((item, idx) => {
-        documentFragment.appendChild(this.drawPin(item, idx));
+        this.documentFragment.appendChild((new Pin(item, idx)).getEl());
       });
-      return documentFragment;
-    },
-    setPosition: function (top, left) {
-      pin.userPin.style.left = left + 'px';
-      pin.userPin.style.top = top + 'px';
-    },
+      return this.documentFragment;
+    }
+  }
+
+  const pin = {
     setAddressCoords: function () {
       return {
         x: pin.userPin.offsetLeft,
@@ -83,6 +72,6 @@
     }
   };
 
-  window.Pin = Pin;
-  window.UserPin = UserPin;
+  window.UserPin = new UserPin();
+  window.PinsCreator = new PinsCreator();
 })();

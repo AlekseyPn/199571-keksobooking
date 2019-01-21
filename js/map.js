@@ -1,13 +1,12 @@
 'use strict';
 window.map = (function () {
   const ELEMENT_NUMBER = 0;
-  const UserPin = new UserPin();
   const el = document.querySelector('.tokyo__pin-mapEl');
   let render = (data) => {
     let randomData = utility.randomizeDataOrder(data);
     randomData = randomData.slice(0, 3);
     window.dialog.setData(randomData);
-    el.appendChild(window.pin.createPinsEl(randomData));
+    el.appendChild(PinsCreator.getPins(randomData));
     window.showCard.showRandom(ELEMENT_NUMBER, randomData);
   };
   let successCb = (data) => {

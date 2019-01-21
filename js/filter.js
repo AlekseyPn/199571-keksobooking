@@ -113,7 +113,7 @@ window.filter = (function () {
       filter.filterRooms();
       filter.filterGuests();
       filter.filterFeature();
-      window.data.mapEl.appendChild(window.pin.createPinsEl(filter.filteredData));
+      window.data.mapEl.appendChild(PinsCreator.getPins(filter.filteredData));
       window.dialog.setData(filter.filteredData);
     },
   };
