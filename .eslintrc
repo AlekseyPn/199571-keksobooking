@@ -10,6 +10,8 @@ globals:
   map: true,
   Pin: true,
   UserPin: true,
-  PinsCreator: true
+  PinsCreator: true,
+  EventChannel: true,
+  DragNDrop: true,
 
 extends: "eslint:recommended"

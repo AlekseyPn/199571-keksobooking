@@ -21,10 +21,10 @@ window.showCard = (function () {
       }
       return pinTarget;
     },
-    showRandom: function (id, data) {
-      pinActiveElement = document.querySelector('#pin-' + id);
+    showRandom: function (idx, data) {
+      pinActiveElement = document.querySelector(`[data-index='${idx}']`);
       showCard.addActiveClass(pinActiveElement);
-      showCard.draw(data, id, window.dialog.dialogPanel, window.dialog.offerDialog);
+      showCard.draw(data, idx, window.dialog.dialogPanel, window.dialog.offerDialog);
     },
     draw: function (adsData, id, removeElem, offerDialog) {
       this.newCard = Card.draw(adsData[id]);

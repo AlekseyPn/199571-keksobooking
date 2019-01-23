@@ -13,19 +13,17 @@
     getEl() {
       let pinElement = this.template.cloneNode(true);
       let pinItem = pinElement.querySelector('.pin');
-      pinItem.style = {
-        left: (this.data.location.x - this.gutter.left) + 'px',
-        top: (this.data.location.y - this.gutter.top) + 'px',
-      }
+      pinItem.style.left = (this.data.location.x - this.gutter.left) + 'px';
+      pinItem.style.top = (this.data.location.y - this.gutter.top) + 'px';
       pinElement.querySelector('img').src = this.data.author.avatar;
       pinItem.dataset.index = this.idx;
       return pinElement;
     },
   }
-  const UserPin = function () {
+  const UserPin = function (map) {
     this.el = document.querySelector('.pin__main')
     let rect = this.el.getBoundingClientRect()
-    let mapRect = map.el.getBoundingClientRect();
+    let mapRect = map.getBoundingClientRect();
     const Limit = {
       Left: 300,
       Top: 100,
@@ -39,39 +37,45 @@
         max: mapRect.width - rect.width,
         min: Limit.Left
       },
+      // подумать чо нить с этим числом
       top: {
-        max: mapRect.height - rect.height,
+        max: 600 - rect.height,
         min: Limit.Top,
       }
     }
-    this.setPosition = function (top, left) {
-      this.el.style.top = this.getPositionValue(top, 'top') + 'px';
-      this.el.style.left = this.getPositionValue(left, 'left') + 'px';
+    this.setPosition = (shift) => {
+      this.el.style.top = this.calcPosition(shift.y, 'top') + 'px';
+      this.el.style.left = this.calcPosition(shift.x, 'left') + 'px';
+
+    }
+    this.isCursorOnPin = () => {
+      if (DragNDrop.coords.x > this.COORD_LIMIT.left.max
+        || DragNDrop.coords.x < this.COORD_LIMIT.left.min
+        || DragNDrop.coords.y > this.COORD_LIMIT.top.max || DragNDrop.coords.y < this.COORD_LIMIT.top.min) {
+        Event.EventChannel("REMOVE_LISTENERS");
+      }
+    }
+    this.calcPosition = (shift, propKey) => {
+      const pos = this.el[`offset${propKey[0].toUpperCase() + propKey.slice(1)}`] - shift;
+      // this.isCursorOnPin();
+      return this.getPositionValue(pos, propKey);
     }
     this.getPositionValue = function (value, propKey) {
       return Math.min(Math.max(this.COORD_LIMIT[propKey].min, value), this.COORD_LIMIT[propKey].max)
     }
+    this.unsubribe = EventChannel.subscribe("SET_POSITION", this.setPosition);
   }
 
   const PinsCreator = function () {
     this.el = document.createDocumentFragment()
     this.getPins = function (data) {
       data.forEach((item, idx) => {
-        this.documentFragment.appendChild((new Pin(item, idx)).getEl());
+        this.el.appendChild((new Pin(item, idx)).getEl());
       });
-      return this.documentFragment;
+      return this.el;
     }
   }
 
-  const pin = {
-    setAddressCoords: function () {
-      return {
-        x: pin.userPin.offsetLeft,
-        y: pin.userPin.offsetTop
-      };
-    }
-  };
-
-  window.UserPin = new UserPin();
+  window.UserPin = UserPin;
   window.PinsCreator = new PinsCreator();
 })();

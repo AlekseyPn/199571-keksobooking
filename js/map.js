@@ -1,7 +1,9 @@
 'use strict';
-window.map = (function () {
+window.tokyoMap = (function () {
   const ELEMENT_NUMBER = 0;
-  const el = document.querySelector('.tokyo__pin-mapEl');
+  const el = document.querySelector('.tokyo__pin-map');
+  // нужен будет глобально
+  const userPin = new UserPin(el);
   let render = (data) => {
     let randomData = utility.randomizeDataOrder(data);
     randomData = randomData.slice(0, 3);
@@ -14,11 +16,11 @@ window.map = (function () {
     render(window.data.adsData);
   };
   ApiClient.fetch(window.modal.errorMessageCb, successCb);
-  UserPin.el.addEventListener('mousedown', (evt) => {
+  userPin.el.addEventListener('mousedown', (evt) => {
     evt.preventDefault();
-    window.drag.setCoords(evt.clientX, evt.clientY);
-    document.addEventListener('mousemove', window.drag.mouseMoveHandler);
-    document.addEventListener('mouseup', window.drag.mouseUpHandler);
+    DragNDrop.setCoords(evt.clientX, evt.clientY);
+    document.addEventListener('mousemove', DragNDrop.mouseMoveHandler);
+    document.addEventListener('mouseup', DragNDrop.mouseUpHandler);
   });
 
   return {

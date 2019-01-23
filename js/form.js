@@ -16,7 +16,7 @@ window.userForm = (function () {
     border: '#34b132',
     shadow: '0 0 4px 1px #34b132'
   };
-  var addressCoords = window.pin.setAddressCoords();
+  var addressCoords = {};
   var userForm = {
     colorizeInputValidation: function (elem, valid) {
       elem.style.borderColor = ERROR_COLOR.border;
@@ -58,7 +58,7 @@ window.userForm = (function () {
     }
   });
   addressInput.addEventListener('invalid', userForm.validationValueMissing);
-  userForm.setAddressValue(addressInput, addressCoords, window.pin.userIconGutter);
+  // userForm.setAddressValue(addressInput, addressCoords, window.pin.userIconGutter);
   noticeForm.addEventListener('submit', function (evt) {
     window.ApiClient.update(window.modal.errorMessageCb, new FormData(noticeForm), userForm.sendHandler);
     evt.preventDefault();
