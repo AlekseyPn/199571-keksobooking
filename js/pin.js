@@ -46,7 +46,6 @@
     this.setPosition = (shift) => {
       this.el.style.top = this.calcPosition(shift.y, 'top') + 'px';
       this.el.style.left = this.calcPosition(shift.x, 'left') + 'px';
-
     }
     this.isCursorOnPin = () => {
       if (DragNDrop.coords.x > this.COORD_LIMIT.left.max

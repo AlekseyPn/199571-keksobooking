@@ -4,6 +4,7 @@ window.tokyoMap = (function () {
   const el = document.querySelector('.tokyo__pin-map');
   // нужен будет глобально
   const userPin = new UserPin(el);
+  const dragNDrop = new DragNDrop(userPin);
   let render = (data) => {
     let randomData = utility.randomizeDataOrder(data);
     randomData = randomData.slice(0, 3);
@@ -18,9 +19,9 @@ window.tokyoMap = (function () {
   ApiClient.fetch(window.modal.errorMessageCb, successCb);
   userPin.el.addEventListener('mousedown', (evt) => {
     evt.preventDefault();
-    DragNDrop.setCoords(evt.clientX, evt.clientY);
-    document.addEventListener('mousemove', DragNDrop.mouseMoveHandler);
-    document.addEventListener('mouseup', DragNDrop.mouseUpHandler);
+    dragNDrop.setCoords(evt.clientX, evt.clientY);
+    document.addEventListener('mousemove', dragNDrop.mouseMoveHandler);
+    document.addEventListener('mouseup', dragNDrop.mouseUpHandler);
   });
 
   return {
