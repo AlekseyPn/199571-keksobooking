@@ -2,6 +2,7 @@
 window.showCard = (function () {
   const PIN_ACTIVE_CLASS = 'pin--active';
   let pinActiveElement = null;
+  // вообще какой то ненужный файл эти действия относятся
   const showCard = {
     newCard: '',
     removeActiveClass: function (elem) {

@@ -3,7 +3,7 @@ window.ApiClient = (function () {
   const BASE_URL = ' https://js.dump.academy/keksobooking';
   const URL = BASE_URL + '/data';
   const SUCCESS_STATUS_CODE = 200;
-  const SEND_METHOD_TYPE = {
+  const METHOD_TYPE = {
     post: 'POST',
     get: 'GET'
   };
@@ -16,35 +16,40 @@ window.ApiClient = (function () {
   const ApiClient = function () {
     let xhr = null;
 
-    const _setupXhr = function (onError, onLoad) {
+    const _setupXhr = function (errorHandler, successHandler) {
       xhr = new XMLHttpRequest();
       xhr.responseType = 'json';
       xhr.addEventListener('load', () => {
         if (xhr.status === SUCCESS_STATUS_CODE) {
-          onLoad(xhr.response);
+          successHandler(xhr.response);
         } else {
-          onError(xhr.response);
+          errorHandler(xhr.response);
         }
       });
       xhr.addEventListener('error', () => {
-        onError(ERROR_MSG.connection);
+        errorHandler(ERROR_MSG.connection);
       });
       xhr.timeout = TIMEOUT;
       xhr.addEventListener('timeout', () => {
-        onError(ERROR_MSG.timeout);
+        errorHandler(ERROR_MSG.timeout);
       });
     };
 
-    this.fetch = function (onError, onLoad) {
-      _setupXhr(onError, onLoad);
-      xhr.open(SEND_METHOD_TYPE.get, URL);
-      xhr.send();
+    this.get = function (errorHandler, successHandler) {
+      fetch(URL).then(response => {
+        successHandler(response.json());
+      }).catch((error) => {
+
+      })
     };
 
-  this.update = function (onError, data, onLoad) {
-      _setupXhr(onError, onLoad);
-      xhr.open(SEND_METHOD_TYPE.post, BASE_URL);
-      xhr.send(data);
+    this.post = function (errorHanlder, data, successHandler) {
+      fetch(BASE_URL, {
+        method: METHOD_TYPE.POST,
+        body: data,
+      }).then(response => {
+        successHandler(response.json())
+      })
     };
   };
   return new ApiClient();
